@@ -1,0 +1,69 @@
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License along
+## with this program; If not, see <http://www.gnu.org/licenses/>.
+##
+## Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
+##
+
+# Cmake initialisation
+PROJECT(Engine_v0)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/)
+
+# Project configuration
+SET(ENGINE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)
+SET(ENGINE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/source/)
+#CONFIGURE_FILE(
+#    ${PROJECT_INCLUDE_DIR}/${CMAKE_PROJECT_NAME}/version.hpp.in
+#    ${PROJECT_INCLUDE_DIR}/${CMAKE_PROJECT_NAME}/version.hpp
+#    )
+
+# Libraries dependencies
+FIND_PACKAGE(GLFW REQUIRED glfw3)
+
+
+
+# Source and Include files
+FILE(GLOB_RECURSE ENGINE_SOURCE_FILES
+    ${ENGINE_SOURCE_DIR}/*.cpp
+    )
+# FOREACH(SOURCE_FILE IN ITEMS ${ENGINE_SOURCE_FILES})
+    # GET_FILENAME_COMPONENT(SOURCE_FILE_PATH "${SOURCE_FILE}" PATH)
+    # FILE(RELATIVE_PATH SOURCE_FILE_RELATIVE_PATH "${CMAKE_SOURCE_DIR}" "${SOURCE_FILE_PATH}")
+    # STRING(REPLACE "/" "\\" GROUP_PATH "${SOURCE_FILE_RELATIVE_PATH}")
+    # SOURCE_GROUP("${GROUP_PATH}" FILES "${SOURCE_FILE}")
+# ENDFOREACH()
+
+FILE(GLOB_RECURSE ENGINE_INCLUDE_FILES
+    ${ENGINE_INCLUDE_DIR}/*.hpp
+	${ENGINE_INCLUDE_DIR}/*.h
+    )	
+# FOREACH(HEADER_FILE IN ITEMS ${ENGINE_INCLUDE_FILES})
+    # GET_FILENAME_COMPONENT(HEADER_FILE_PATH "${HEADER_FILE}" PATH)
+    # FILE(RELATIVE_PATH HEADER_FILE_RELATIVE_PATH "${CMAKE_SOURCE_DIR}" "${HEADER_FILE_PATH}")
+    # STRING(REPLACE "/" "\\" GROUP_PATH "${HEADER_FILE_RELATIVE_PATH}")
+    # SOURCE_GROUP("${GROUP_PATH}" FILES "${HEADER_FILE}")
+# ENDFOREACH()
+
+	
+# Include directories
+INCLUDE_DIRECTORIES(${ENGINE_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(SYSTEM
+    ${GLFW_INCLUDE_DIR}
+)
+
+
+
+# Binary settings
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${ENGINE_SOURCE_FILES} ${ENGINE_INCLUDE_FILES})
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${GLFW_LIBRARIES})
