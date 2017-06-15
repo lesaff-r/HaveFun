@@ -19,12 +19,15 @@
 
 #include "Engine/Window.h"
 
-namespace	engine {
+namespace engine {
 
-	class	Program final
+	// @note Can throw std::runtime_error on construction
+	// @see Program(int ac, char * av[]);
+	class Program final
 	{
 	public:
 		// @brief Throw std::runtime_error if Window creation failed
+		// @see Window::Window();
 		Program(int ac, char * av[]);
 
 	public:
