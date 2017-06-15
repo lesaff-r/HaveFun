@@ -44,7 +44,7 @@ namespace engine {
 
 
 	public:
-		/*inline?*/ int should_close() const;
+		int should_close() const;
 		void resize(int width, int heigh) const;
 
 		void update();
