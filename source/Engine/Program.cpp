@@ -19,26 +19,19 @@
 
 #include <iostream>
 
-namespace engine
-{
+namespace engine {
 
 	Program::Program(int argc, char * argv[]) :
 		m_window{}
-	{
-
-	}
+	{}
 
 	int
 	Program::run(void) {
-		// Game Loop
-		// Update Inputs (& Objects?)
-		// Render scene
-		// Update Display
 		while (!m_window.should_close())
 		{
-			m_window.processInputs(); // TODO: Should be on an external EventManager in the future
-
 			m_window.update();
+			
+			m_window.render();
 		}
 		return EXIT_SUCCESS;
 	}

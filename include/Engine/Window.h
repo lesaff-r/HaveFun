@@ -17,10 +17,16 @@
 
 #pragma once
 
-struct GLFWwindow;
+#include "Engine\Gui.h"
+
+#include <memory>
+
+struct	GLFWwindow;
 
 namespace engine {
 
+	// @brief Encapsulate a Window context
+	// For now support only GLFW
 	class Window final
 	{
 	public:
@@ -38,13 +44,19 @@ namespace engine {
 
 
 	public:
-		/*inline*/ int should_close() const;
-		void update();
+		/*inline?*/ int should_close() const;
+		void resize(int width, int heigh) const;
 
+		void update();
+		void render();
+
+	private:
 		void processInputs();
 
 	private:
 		GLFWwindow * m_window;
+
+		std::unique_ptr<Gui> m_gui;
 	};
 }
 

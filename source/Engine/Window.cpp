@@ -15,13 +15,14 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#include	"Engine/Window.h"
+#include "Engine/Window.h"
 
-#include	<glad/glad.h>
-#include    <GLFW/glfw3.h>
-#include	<iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <stdexcept>
+#include <functional>
 
-namespace	engine {
+namespace engine {
 
 	Window::Window()
 	{
@@ -41,7 +42,7 @@ namespace	engine {
 			throw std::runtime_error("[ERROR] GLFW Window creation failed");
 		}
 
-		// Set window for current OpenGL context
+		// Makes current Window context
 		glfwMakeContextCurrent(m_window);
 
 		// Glad Initialization
@@ -49,6 +50,12 @@ namespace	engine {
 			glfwTerminate();
 			throw std::runtime_error("[ERROR] GLAD Initialization failed");
 		}
+
+		// Initialize GUI
+		auto winResizeFn = [this](int width, int heigh) {
+			this->resize(width, heigh);
+		};
+		m_gui = std::make_unique<Gui>(m_window, winResizeFn);
 	}
 
 	Window::~Window() {
@@ -63,8 +70,26 @@ namespace	engine {
 
 	void
 	Window::update() {
-		glfwSwapBuffers(m_window);
+		// Manage events
 		glfwPollEvents();
+		processInputs();
+
+		// Update GUI
+		m_gui->update();
+	}
+
+	void
+	Window::render() {
+		// Display GUI
+		m_gui->render();
+
+		// Display window on Screen
+		glfwSwapBuffers(m_window);
+	}
+
+	void
+	Window::resize(int width, int heigh) const {
+		glfwSetWindowSize(m_window, width, heigh);
 	}
 
 
@@ -72,6 +97,7 @@ namespace	engine {
 	Window::processInputs() {
 		// Use this or use 
 		// glfwSetKeyCallback(window, key_callback);
+		// for more a generic way to manage events
 		if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(m_window, true);
 	}

@@ -17,9 +17,31 @@
 
 #pragma once
 
-#define ENGINE_VERSION_MAJOR 0
-#define ENGINE_VERSION_MINOR 1
-#define ENGINE_VERSION_PATCH 1
-#define ENGINE_VERSION_EXTRA 0
-#define ENGINE_VERSION       "0.1.1"
-#define ENGINE_VERSION_FULL  "0.1.1.0"
+#include <functional>
+
+struct GLFWwindow;
+
+namespace engine {
+
+	// @brief Handler for imgui
+	class Gui
+	{
+	// @brief Callback for GUI Window resize
+	using WinResizeFn = std::function<void(int, int)>;
+
+	public:
+		Gui(GLFWwindow * window, WinResizeFn winResizeFn);
+		~Gui();
+
+	
+	public:
+		void update();
+		void render() const;
+
+
+	private:
+		bool m_resizeWindow;
+		
+		WinResizeFn m_winResizeFn;
+	};
+}
