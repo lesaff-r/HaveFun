@@ -35,7 +35,7 @@ namespace engine {
     }
 
 
-	void
+    void
     Gui::update()
     {
         ImGui_ImplGlfwGL3_NewFrame();
