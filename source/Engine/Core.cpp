@@ -15,29 +15,19 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\Core.h"
 
 namespace engine {
 
-	// @note Can throw std::runtime_error on construction
-	// @see Program(int ac, char * av[]);
-	class Program final
+	Core::Core()
 	{
-	public:
-		// @brief Throw std::runtime_error if Window creation failed
-		// @see Window::Window();
-		Program(int ac, char * av[]);
 
-	public:
-		int		run(void);
+	}
 
 
-	private:
-		Window	m_window;
-		Core	m_core;
-	};
+	void
+	Core::render()
+	{
+		m_scene.render();
+	}
 }
-

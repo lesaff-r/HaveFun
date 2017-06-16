@@ -30,7 +30,7 @@ namespace engine {
 		while (!m_window.should_close())
 		{
 			m_window.update();
-			
+			m_core.render();
 			m_window.render();
 		}
 		return EXIT_SUCCESS;

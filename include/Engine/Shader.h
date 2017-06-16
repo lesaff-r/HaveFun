@@ -17,46 +17,20 @@
 
 #pragma once
 
-#include "Engine\Gui.h"
-
-#include <memory>
-
-struct	GLFWwindow;
+#include <string>
 
 namespace engine {
 
-	// @brief Encapsulate a Window context
-	// For now support only GLFW
-	class Window final
+	class Shader
 	{
 	public:
-		// @brief Throw std::runtime_error if GLFW or GLAD Initialization failed
-		Window();
-		~Window();
-
-		// Delete copy operations
-		Window(const Window &) = delete;
-		Window & operator=(const Window &) = delete;
-
-		// Define default moving operations
-		Window(Window &&) = default;
-		Window & operator=(Window &&) = default;
-
-
-	public:
-		/*inline?*/ int should_close() const;
-		void resize(int width, int heigh) const;
-
-		void update();
-		void render();
+		Shader(const std::string & data); // Will also receive a type in the future
+		~Shader();
 
 	private:
-		void processInputs();
-
-	private:
-		GLFWwindow * m_window;
-
-		std::unique_ptr<Gui> m_gui;
+		unsigned int m_id;
+		// Type
+		// Is_compiled
 	};
 }
 

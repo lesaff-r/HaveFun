@@ -17,46 +17,24 @@
 
 #pragma once
 
-#include "Engine\Gui.h"
+#include "Engine\Object.h"
 
-#include <memory>
-
-struct	GLFWwindow;
+#include <list>
 
 namespace engine {
 
-	// @brief Encapsulate a Window context
-	// For now support only GLFW
-	class Window final
+	class Scene
 	{
 	public:
-		// @brief Throw std::runtime_error if GLFW or GLAD Initialization failed
-		Window();
-		~Window();
-
-		// Delete copy operations
-		Window(const Window &) = delete;
-		Window & operator=(const Window &) = delete;
-
-		// Define default moving operations
-		Window(Window &&) = default;
-		Window & operator=(Window &&) = default;
+		Scene();
 
 
 	public:
-		/*inline?*/ int should_close() const;
-		void resize(int width, int heigh) const;
-
-		void update();
 		void render();
 
-	private:
-		void processInputs();
 
 	private:
-		GLFWwindow * m_window;
-
-		std::unique_ptr<Gui> m_gui;
+		std::list<Object*> m_objects; // shared/unique ptr?
 	};
 }
 

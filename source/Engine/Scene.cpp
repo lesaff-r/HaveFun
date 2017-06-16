@@ -15,29 +15,34 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\Scene.h"
+#include "Engine\Shader.h"
 
 namespace engine {
 
-	// @note Can throw std::runtime_error on construction
-	// @see Program(int ac, char * av[]);
-	class Program final
+	Scene::Scene()
 	{
-	public:
-		// @brief Throw std::runtime_error if Window creation failed
-		// @see Window::Window();
-		Program(int ac, char * av[]);
+		// Ugly stuff until I support file loading :'(
+		const std::string vertexShaderSource{ "#version 430 \n"
+			"void main()\n"
+			"{\n"
+			"}\0" };
 
-	public:
-		int		run(void);
+		// Load Shader
+		Shader * vertexShaderId = new Shader(vertexShaderSource);
+		// Shader fragmentShaderId = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+
+		// New Object
+		m_objects.emplace_back(new Object);
+	}
 
 
-	private:
-		Window	m_window;
-		Core	m_core;
-	};
+	void
+	Scene::render()
+	{
+		for (auto & object : m_objects)
+		{
+			object->render();
+		}
+	}
 }
-
