@@ -21,17 +21,17 @@
 
 namespace engine {
 
-	class Core
-	{
-	public:
-		Core();
+    class Core
+    {
+    public:
+        Core();
 
 
-	public:
-		void render();
+    public:
+        void render();
 
-	private:
-		Scene m_scene;
-	};
+    private:
+        Scene m_scene;
+    };
 }
 

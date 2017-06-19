@@ -19,14 +19,13 @@
 
 namespace engine {
 
-	Core::Core() : 
-		m_scene{}
-	{}
+    Core::Core() : 
+        m_scene{}
+    {}
 
 
-	void
-	Core::render()
-	{
-		m_scene.render();
-	}
+    void
+    Core::render() {
+        m_scene.render();
+    }
 }

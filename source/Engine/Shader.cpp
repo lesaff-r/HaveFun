@@ -23,66 +23,81 @@
 
 namespace engine {
 
-	// TODO: Will later be in deferent methods to abstract calls
-	Shader::Shader(const std::string & data) :
-		m_id{ createShaderFromType() }
-	{
-		// Attach source code to the given shader
-		const char * raw_data = data.c_str();
-		glShaderSource(m_id, 1, &raw_data, nullptr);
+    Shader::Shader(const std::string & data,
+                   const GLenum & type) :
+        m_type{ type },
+        m_id{ createShaderFromType(type) },
+        m_isCompiled{ false }
 
-		// Load from file
-		//	 TODO: Not available for now
+    {
+        // Attach source code to the given shader
+        const char * raw_data = data.c_str();
+        glShaderSource(m_id, 1, &raw_data, nullptr);
 
-		compile();
-	}
+        // Load from file
+        //	 TODO: Not available for now
 
-	Shader::~Shader()
-	{
-		glDeleteShader(m_id);
-	}
+        compile();
+    }
+
+    Shader::~Shader()
+    {
+        glDeleteShader(m_id);
+    }
 
 
-	unsigned int
-	Shader::createShaderFromType() {
-		// TODO: Only support GL_VERTEX_SHADER for now, but will later take a type as parameter
-		GLint id = glCreateShader(GL_VERTEX_SHADER);
+    unsigned int
+    Shader::createShaderFromType(const GLenum & type) {
 
-		// Shader creation should never fail
-		assert (id != 0);
+        GLint id;
 
-		return id;
-	}
+        switch (type)
+        {
+        case (GL_VERTEX_SHADER):
+            id = glCreateShader(GL_VERTEX_SHADER);
+        case (GL_FRAGMENT_SHADER):
+            id = glCreateShader(GL_FRAGMENT_SHADER);
+        default:
+            id = 0;
+        }
 
-	void
-	Shader::compile() {
-		// Compile the shader
-		glCompileShader(m_id);
+        // Shader creation should never fail
+        assert (id != 0);
 
-		// Get compile status
-		GLint compileStatus;
-		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compileStatus);
+        return id;
+    }
 
-		// And check if shader compilation failed
-		m_isCompiled = (compileStatus == GL_TRUE);
-		if (!m_isCompiled)
-			getLogInfos();
-	}
+    void
+    Shader::compile() {
 
-	void
-	Shader::getLogInfos() {
-		// Getting Log length
-		GLint infoLogLength;
-		glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);
+        // Compile the shader
+        glCompileShader(m_id);
 
-		// Create log container
-		GLchar * infoLog = new GLchar[infoLogLength + 1];
-		glGetShaderInfoLog(m_id, infoLogLength, nullptr, infoLog);
+        // Get compile status
+        GLint compileStatus;
+        glGetShaderiv(m_id, GL_COMPILE_STATUS, &compileStatus);
 
-		// Display log
-		std::cout << infoLog << std::endl;
+        // And check if shader compilation failed
+        m_isCompiled = (compileStatus == GL_TRUE);
+        if (!m_isCompiled)
+            getLogInfos();
+    }
 
-		// Then delete log container
-		delete[] infoLog;
-	}
+    void
+    Shader::getLogInfos() {
+
+        // Getting Log length
+        GLint infoLogLength;
+        glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+        // Create log container
+        GLchar * infoLog = new GLchar[infoLogLength + 1];
+        glGetShaderInfoLog(m_id, infoLogLength, nullptr, infoLog);
+
+        // Display log
+        std::cout << infoLog << std::endl;
+
+        // Then delete log container
+        delete[] infoLog;
+    }
 }

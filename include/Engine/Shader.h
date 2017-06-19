@@ -17,33 +17,36 @@
 
 #pragma once
 
+#include <glad\glad.h>
 #include <string>
 
 namespace engine {
 
-	class Shader
-	{
-	public:
-		Shader(const std::string & data); // TODO: Will also receive a type in the future
-		~Shader();
+    class Shader
+    {
+    public:
+        Shader(const std::string & data,
+               const GLenum & type);
+        ~Shader();
 
-	public:
-		inline unsigned int id() { return m_id; }
+    public:
+        inline unsigned int id() { return m_id; }
 
 
-	private:
-		// @brief Create a new shader of the given type
-		unsigned int createShaderFromType();
-		// @brief Try to compile the shader
-		void compile();
+    private:
+        // @brief Create a new shader of the given type
+        unsigned int createShaderFromType(const GLenum & type);
 
-		void getLogInfos();
+        // @brief Try to compile the shader
+        void compile();
 
-	private:
-		unsigned int m_id;
+        void getLogInfos();
 
-		bool		 m_isCompiled;
-		// TODO: Type?
-	};
+    private:
+        GLenum	m_type;
+        GLuint	m_id;
+
+        bool	m_isCompiled;
+    };
 }
 

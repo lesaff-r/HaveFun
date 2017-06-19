@@ -23,13 +23,22 @@ namespace engine {
 	Scene::Scene()
 	{
 		// Ugly stuff until I support file loading :'(
-		const std::string vertexShaderSource{ "#version 430\n"
+		const std::string vertexShaderSource{ "#version 430\n\n"
+			"layout (location = 0) in vec3 Position;\n\n"
 			"void main()\n"
 			"{\n"
+			"   gl_Position = vec4(Position, 1.0);\n"
+			"}\0" };
+		const std::string fragmentShaderSource{ "#version 430\n\n"
+			"out vec4 FragColors;\n\n"
+			"void main()\n"
+			"{\n"
+			"FragColors = vec4(1.0, 1.0, 1.0, 1.0);\n"
 			"}\0" };
 
 		// Create new Shader Program
-		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource);
+		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource,
+														  fragmentShaderSource);
 		// TODO: m_shaderProgram->attachShader(); or
 		// Pass fragmentShaderSource to ShaderProgram constructor
 
