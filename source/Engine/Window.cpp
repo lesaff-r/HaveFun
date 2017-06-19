@@ -28,7 +28,7 @@ namespace engine {
 	{
 		// GLFW Initialization
 		if (!glfwInit())
-			throw std::runtime_error("[ERROR] GLFW Initialization failed");
+			throw std::runtime_error{ "[ERROR] GLFW Initialization failed" };
 
 		// Support from OpenGL 4.3
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -39,7 +39,7 @@ namespace engine {
 		m_window = glfwCreateWindow(720, 480, "Engine_v0", NULL, NULL);
 		if (!m_window) {
 			glfwTerminate();
-			throw std::runtime_error("[ERROR] GLFW Window creation failed");
+			throw std::runtime_error{ "[ERROR] GLFW Window creation failed" };
 		}
 
 		// Makes current Window context
@@ -48,7 +48,7 @@ namespace engine {
 		// Glad Initialization
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 			glfwTerminate();
-			throw std::runtime_error("[ERROR] GLAD Initialization failed");
+			throw std::runtime_error{ "[ERROR] GLAD Initialization failed" };
 		}
 
 		// Initialize GUI

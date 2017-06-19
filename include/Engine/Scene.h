@@ -18,8 +18,10 @@
 #pragma once
 
 #include "Engine\Object.h"
+#include "Engine\ShaderProgram.h"
 
 #include <list>
+#include <memory>
 
 namespace engine {
 
@@ -28,13 +30,15 @@ namespace engine {
 	public:
 		Scene();
 
-
 	public:
 		void render();
 
 
 	private:
-		std::list<Object*> m_objects; // shared/unique ptr?
+		std::list<std::unique_ptr<Object>> m_objects;
+
+		// TODO: For now but will late be a material in the object
+		std::unique_ptr<ShaderProgram> m_shaderProgram;
 	};
 }
 

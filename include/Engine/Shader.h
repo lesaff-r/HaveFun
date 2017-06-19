@@ -24,13 +24,26 @@ namespace engine {
 	class Shader
 	{
 	public:
-		Shader(const std::string & data); // Will also receive a type in the future
+		Shader(const std::string & data); // TODO: Will also receive a type in the future
 		~Shader();
+
+	public:
+		inline unsigned int id() { return m_id; }
+
+
+	private:
+		// @brief Create a new shader of the given type
+		unsigned int createShaderFromType();
+		// @brief Try to compile the shader
+		void compile();
+
+		void getLogInfos();
 
 	private:
 		unsigned int m_id;
-		// Type
-		// Is_compiled
+
+		bool		 m_isCompiled;
+		// TODO: Type?
 	};
 }
 

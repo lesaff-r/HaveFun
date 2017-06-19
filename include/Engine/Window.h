@@ -30,7 +30,8 @@ namespace engine {
 	class Window final
 	{
 	public:
-		// @brief Throw std::runtime_error if GLFW or GLAD Initialization failed
+		// @brief Create a new GLFW window
+		// @note Throw std::runtime_error if GLFW or GLAD Initialization failed
 		Window();
 		~Window();
 

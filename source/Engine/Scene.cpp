@@ -16,33 +16,40 @@
 //
 
 #include "Engine\Scene.h"
-#include "Engine\Shader.h"
+#include "Engine\ShaderProgram.h"
 
 namespace engine {
 
 	Scene::Scene()
 	{
 		// Ugly stuff until I support file loading :'(
-		const std::string vertexShaderSource{ "#version 430 \n"
+		const std::string vertexShaderSource{ "#version 430\n"
 			"void main()\n"
 			"{\n"
 			"}\0" };
 
-		// Load Shader
-		Shader * vertexShaderId = new Shader(vertexShaderSource);
-		// Shader fragmentShaderId = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+		// Create new Shader Program
+		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource);
+		// TODO: m_shaderProgram->attachShader(); or
+		// Pass fragmentShaderSource to ShaderProgram constructor
 
-		// New Object
-		m_objects.emplace_back(new Object);
+		// New Test Object
+		m_objects.emplace_back(std::make_unique<Object>());
 	}
 
 
 	void
 	Scene::render()
 	{
+		// Bind Shader Program
+		m_shaderProgram->bind();
+
 		for (auto & object : m_objects)
 		{
 			object->render();
 		}
+
+		// Unbind Shader Program
+		m_shaderProgram->unbind();
 	}
 }

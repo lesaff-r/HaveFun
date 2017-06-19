@@ -19,10 +19,9 @@
 
 namespace engine {
 
-	Core::Core()
-	{
-
-	}
+	Core::Core() : 
+		m_scene{}
+	{}
 
 
 	void

@@ -22,7 +22,8 @@
 namespace engine {
 
 	Program::Program(int argc, char * argv[]) :
-		m_window{}
+		m_window{},
+		m_core{}
 	{}
 
 	int

@@ -18,18 +18,15 @@
 #include "Engine\Shader.h"
 
 #include <glad/glad.h>
+#include <cassert>
 #include <iostream>
 
 namespace engine {
 
 	// TODO: Will later be in deferent methods to abstract calls
-	// TODO: Also need a shader Program
-	Shader::Shader(const std::string & data)
+	Shader::Shader(const std::string & data) :
+		m_id{ createShaderFromType() }
 	{
-		// Create a new shader
-		// TODO: Only support GL_VERTEX_SHADER for now, but will later take a type as parameter
-		m_id = glCreateShader(GL_VERTEX_SHADER); // failed if given id is 0
-
 		// Attach source code to the given shader
 		const char * raw_data = data.c_str();
 		glShaderSource(m_id, 1, &raw_data, nullptr);
@@ -37,28 +34,7 @@ namespace engine {
 		// Load from file
 		//	 TODO: Not available for now
 
-		// Compile
-		glCompileShader(m_id);
-		// Checking if compile failed
-		GLint compileStatus; // TODO: Should later be stored in Object
-
-		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compileStatus);
-		if (compileStatus = GL_FALSE)
-		{
-			// Getting Log length
-			GLint infoLogLength;
-			glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);
-
-			// Create log container
-			GLchar * infoLog = new GLchar[infoLogLength + 1];
-			glGetShaderInfoLog(m_id, infoLogLength, nullptr, infoLog);
-
-			// Display log Info
-			std::cout << infoLog << std::endl;
-
-			// Then delete it
-			delete[] infoLog;
-		}
+		compile();
 	}
 
 	Shader::~Shader()
@@ -66,4 +42,47 @@ namespace engine {
 		glDeleteShader(m_id);
 	}
 
+
+	unsigned int
+	Shader::createShaderFromType() {
+		// TODO: Only support GL_VERTEX_SHADER for now, but will later take a type as parameter
+		GLint id = glCreateShader(GL_VERTEX_SHADER);
+
+		// Shader creation should never fail
+		assert (id != 0);
+
+		return id;
+	}
+
+	void
+	Shader::compile() {
+		// Compile the shader
+		glCompileShader(m_id);
+
+		// Get compile status
+		GLint compileStatus;
+		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compileStatus);
+
+		// And check if shader compilation failed
+		m_isCompiled = (compileStatus == GL_TRUE);
+		if (!m_isCompiled)
+			getLogInfos();
+	}
+
+	void
+	Shader::getLogInfos() {
+		// Getting Log length
+		GLint infoLogLength;
+		glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+		// Create log container
+		GLchar * infoLog = new GLchar[infoLogLength + 1];
+		glGetShaderInfoLog(m_id, infoLogLength, nullptr, infoLog);
+
+		// Display log
+		std::cout << infoLog << std::endl;
+
+		// Then delete log container
+		delete[] infoLog;
+	}
 }

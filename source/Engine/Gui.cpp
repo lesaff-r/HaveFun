@@ -19,7 +19,7 @@
 
 #include <imgui/imgui.h>
 #include "imgui/imgui_impl_glfw_gl3.h"
-#include <iostream>
+
 namespace engine {
 
 	Gui::Gui(GLFWwindow * window, Gui::WinResizeFn winResizeFn) :
