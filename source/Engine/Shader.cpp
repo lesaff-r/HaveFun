@@ -49,14 +49,16 @@ namespace engine {
     unsigned int
     Shader::createShaderFromType(const GLenum & type) {
 
-        GLint id;
+        GLuint id;
 
         switch (type)
         {
         case (GL_VERTEX_SHADER):
             id = glCreateShader(GL_VERTEX_SHADER);
+            break;
         case (GL_FRAGMENT_SHADER):
             id = glCreateShader(GL_FRAGMENT_SHADER);
+            break;
         default:
             id = 0;
         }
