@@ -33,14 +33,13 @@ namespace engine {
 			"out vec4 FragColors;\n\n"
 			"void main()\n"
 			"{\n"
-			"FragColors = vec4(1.0, 1.0, 1.0, 1.0);\n"
+			"FragColors = vec4(1.0, 0.0, 0.0, 1.0);\n"
 			"}\0" };
 
 		// Create new Shader Program
 		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource,
 														  fragmentShaderSource);
-		// TODO: m_shaderProgram->attachShader(); or
-		// Pass fragmentShaderSource to ShaderProgram constructor
+		// TODO: m_shaderProgram->attachShader()?
 
 		// New Test Object
 		m_objects.emplace_back(std::make_unique<Object>());
@@ -50,6 +49,14 @@ namespace engine {
 	void
 	Scene::render()
 	{
+        // TODO: Should be in a renderer
+        // Clear Buffers
+        glClearColor(0.2f, 0.2f, .2f, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+        // For later
+        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // glEnable(GL_DEPTH_TEST);
+
 		// Bind Shader Program
 		m_shaderProgram->bind();
 

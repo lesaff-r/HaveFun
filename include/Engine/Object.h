@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <glad\glad.h>
+
 namespace engine {
 
 	class Object
@@ -27,5 +29,9 @@ namespace engine {
 
 	public:
 		void render();
+
+    private:
+        GLuint m_vao;
+        GLuint m_vboVertices;
 	};
 }

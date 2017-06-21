@@ -17,16 +17,49 @@
 
 #include "Engine\Object.h"
 
+#include <glad\glad.h>
+
 namespace engine {
 
 	Object::Object()
 	{
+        // Define a simple triangle
+        const float vertexPositions[] = {
+            -0.5f, -0.5f, 0.0f, // left
+            0.5f, -0.5f, 0.0f, // right
+            0.0f,  0.5f, 0.0f  // top
+        };
 
+        // Create and bind VAO
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        // Create a VBO for vertices then bind it
+        glGenBuffers(1, &m_vboVertices);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vboVertices);
+
+        // Create memory space and store data for current bound Vertex Buffer Object
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
+
+        // Define the vertex buffer data interpretation for current bound Vertex Buffer Object
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
+
+        // Unbind VBO and VAO
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
 	}
 
 	void
 	Object::render()
 	{
-		
+		// Bind VAO
+        glBindVertexArray(m_vao);
+
+        // Draw object
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        // Unbind VAO
+        glBindVertexArray(0);
 	}
 }
