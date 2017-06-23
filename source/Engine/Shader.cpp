@@ -49,8 +49,8 @@ namespace engine {
 
 
     unsigned int
-    Shader::createShaderFromType(const GLenum & type) {
-
+    Shader::createShaderFromType(const GLenum & type)
+    {
         GLuint id;
 
         switch (type)
@@ -72,8 +72,8 @@ namespace engine {
     }
 
     void
-    Shader::compile() {
-
+    Shader::compile()
+    {
         // Compile the shader
         glCompileShader(m_id);
 
@@ -88,8 +88,8 @@ namespace engine {
     }
 
     void
-    Shader::getLogInfos() {
-
+    Shader::getLogInfos()
+    {
         // Getting Log length
         GLint infoLogLength;
         glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);
@@ -107,7 +107,8 @@ namespace engine {
 
 
     const std::string
-    Shader::get(const std::string & path) {
+    Shader::get(const std::string & path)
+    {
         // Try to open shader file
         std::ifstream file(path.c_str());
 

@@ -25,20 +25,19 @@
 
 namespace engine {
 
-	class Scene
-	{
-	public:
-		Scene();
+    class Scene
+    {
+    public:
+        Scene();
 
-	public:
-		void render();
+    public:
+        void render();
 
 
-	private:
-		std::list<std::unique_ptr<Object>> m_objects;
+    private:
+        std::list<std::unique_ptr<Object>> m_objects;
 
-		// TODO: For now but will late be a material in the object
-		std::unique_ptr<ShaderProgram> m_shaderProgram;
-	};
+        // TODO: For now but will late be a material in the object
+        std::unique_ptr<ShaderProgram> m_shaderProgram;
+    };
 }
-

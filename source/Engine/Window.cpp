@@ -17,88 +17,85 @@
 
 #include "Engine/Window.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <stdexcept>
 #include <functional>
 
 namespace engine {
 
-	Window::Window()
-	{
-		// GLFW Initialization
-		if (!glfwInit())
-			throw std::runtime_error{ "[ERROR] GLFW Initialization failed" };
+    Window::Window()
+    {
+        // GLFW Initialization
+        if (!glfwInit())
+            throw std::runtime_error{ "[ERROR] GLFW Initialization failed" };
 
-		// Support from OpenGL 4.3
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        // Support from OpenGL 4.3
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		// Create GLFW Window
-		m_window = glfwCreateWindow(720, 480, "Engine_v0", NULL, NULL);
-		if (!m_window) {
-			glfwTerminate();
-			throw std::runtime_error{ "[ERROR] GLFW Window creation failed" };
-		}
+        // Create GLFW Window
+        m_window = glfwCreateWindow(720, 480, "Engine_v0", NULL, NULL);
+        if (!m_window) {
+            glfwTerminate();
+            throw std::runtime_error{ "[ERROR] GLFW Window creation failed" };
+        }
 
-		// Makes current Window context
-		glfwMakeContextCurrent(m_window);
+        // Makes current Window context
+        glfwMakeContextCurrent(m_window);
 
-		// Glad Initialization
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-			glfwTerminate();
-			throw std::runtime_error{ "[ERROR] GLAD Initialization failed" };
-		}
+        // Glad Initialization
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            glfwTerminate();
+            throw std::runtime_error{ "[ERROR] GLAD Initialization failed" };
+        }
 
-		// Initialize GUI
-		auto winResizeFn = [this](int width, int heigh) {
-			this->resize(width, heigh);
-		};
-		m_gui = std::make_unique<Gui>(m_window, winResizeFn);
-	}
+        // Initialize GUI
+        auto winResizeFn = [this](int width, int heigh) {
+            this->resize(width, heigh);
+        };
+        m_gui = std::make_unique<Gui>(m_window, winResizeFn);
+    }
 
-	Window::~Window() {
-		glfwTerminate();
-	}
-
-
-	int
-	Window::should_close() const {
-		return glfwWindowShouldClose(m_window);
-	}
-
-	void
-	Window::update() {
-		// Manage events
-		glfwPollEvents();
-		processInputs();
-
-		// Update GUI
-		m_gui->update();
-	}
-
-	void
-	Window::render() {
-		// Display GUI
-		m_gui->render();
-
-		// Display window on Screen
-		glfwSwapBuffers(m_window);
-	}
-
-	void
-	Window::resize(int width, int heigh) const {
-		glfwSetWindowSize(m_window, width, heigh);
-	}
+    Window::~Window()
+    {
+        glfwTerminate();
+    }
 
 
-	void
-	Window::processInputs() {
-		// Use this or use 
-		// glfwSetKeyCallback(window, key_callback);
-		// for more a generic way to manage events
-		if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(m_window, true);
-	}
+    void
+    Window::update()
+    {
+        // Manage events
+        glfwPollEvents();
+        processInputs();
+
+        // Update GUI
+        m_gui->update();
+    }
+
+    void
+    Window::render()
+    {
+        // Display GUI
+        m_gui->render();
+
+        // Display window on Screen
+        glfwSwapBuffers(m_window);
+    }
+
+    void
+    Window::resize(int width, int heigh) const {
+        glfwSetWindowSize(m_window, width, heigh);
+    }
+
+
+    void
+    Window::processInputs()
+    {
+        // Use this or use 
+        // glfwSetKeyCallback(window, key_callback);
+        // for more a generic way to manage events
+        if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(m_window, true);
+    }
 }

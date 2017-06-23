@@ -21,27 +21,27 @@
 
 namespace engine {
 
-	Scene::Scene()
-	{
+    Scene::Scene()
+    {
         // Load default shader
-		const std::string vertexShaderSource =
+        const std::string vertexShaderSource =
             std::move(Shader::get(RESOURCES_PATH "default.vs.glsl"));
         const std::string fragmentShaderSource =
             std::move(Shader::get(RESOURCES_PATH "default.fs.glsl"));
 
-		// Create new Shader Program
-		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource,
+        // Create new Shader Program
+        m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource,
 														  fragmentShaderSource);
-		// TODO: m_shaderProgram->attachShader()?
+        // TODO: m_shaderProgram->attachShader()?
 
-		// New Test Object
-		m_objects.emplace_back(std::make_unique<Object>());
-	}
+        // New Test Object
+        m_objects.emplace_back(std::make_unique<Object>());
+    }
 
 
-	void
-	Scene::render()
-	{
+    void
+    Scene::render()
+    {
         // TODO: Should be in a renderer
         // Clear Buffers
         glClearColor(0.2f, 0.2f, .2f, 0);
@@ -50,15 +50,15 @@ namespace engine {
         // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // glEnable(GL_DEPTH_TEST);
 
-		// Bind Shader Program
-		m_shaderProgram->bind();
+        // Bind Shader Program
+        m_shaderProgram->bind();
 
-		for (auto & object : m_objects)
-		{
-			object->render();
-		}
+        for (auto & object : m_objects)
+        {
+            object->render();
+        }
 
-		// Unbind Shader Program
-		m_shaderProgram->unbind();
-	}
+        // Unbind Shader Program
+        m_shaderProgram->unbind();
+    }
 }

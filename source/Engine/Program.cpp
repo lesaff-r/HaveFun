@@ -21,20 +21,20 @@
 
 namespace engine {
 
-	Program::Program(int argc, char * argv[]) :
-		m_window{},
-		m_core{}
-	{}
+    Program::Program(int argc, char * argv[]) :
+        m_window{},
+        m_core{}
+    {}
 
-	int
-	Program::run(void) {
-		while (!m_window.should_close())
-		{
-			m_window.update();
-			m_core.render();
-			m_window.render();
-		}
-		return EXIT_SUCCESS;
-	}
+    int
+    Program::run(void)
+    {
+        while (!m_window.should_close())
+        {
+            m_window.update();
+            m_core.render();
+            m_window.render();
+        }
+        return EXIT_SUCCESS;
+    }
 }
-

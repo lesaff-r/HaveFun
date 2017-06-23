@@ -22,39 +22,41 @@
 
 namespace engine {
 
-	Gui::Gui(GLFWwindow * window, Gui::WinResizeFn winResizeFn) :
-		m_resizeWindow{true},
-		m_winResizeFn{ std::move(winResizeFn) }
-	{
-		ImGui_ImplGlfwGL3_Init(window, true);
-	}
+    Gui::Gui(GLFWwindow * window, Gui::WinResizeFn winResizeFn) :
+        m_resizeWindow{true},
+        m_winResizeFn{ std::move(winResizeFn) }
+    {
+        ImGui_ImplGlfwGL3_Init(window, true);
+    }
 
-	Gui::~Gui() {
-		ImGui_ImplGlfwGL3_Shutdown();
-	}
+    Gui::~Gui()
+    {
+        ImGui_ImplGlfwGL3_Shutdown();
+    }
 
-
-	void
-	Gui::update() {
-		ImGui_ImplGlfwGL3_NewFrame();
-
-		// New GUI Window for resizing
-		if (m_resizeWindow)
-		{
-			ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse;
-			ImGui::Begin("Test resize window", &m_resizeWindow, flags);
-			if (ImGui::Button("1920x1080"))
-				m_winResizeFn(1920, 1080);
-			if (ImGui::Button("1080x720"))
-				m_winResizeFn(1080, 720);
-			if ((ImGui::Button("720x480")))
-				m_winResizeFn(720, 480);
-			ImGui::End();
-		}
-	}
 
 	void
-	Gui::render() const {
-		ImGui::Render();
-	}
+        Gui::update()
+    {
+        ImGui_ImplGlfwGL3_NewFrame();
+
+        // New GUI Window for resizing
+        if (m_resizeWindow)
+        {
+            ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse;
+            ImGui::Begin("Test resize window", &m_resizeWindow, flags);
+            if (ImGui::Button("1920x1080"))
+                m_winResizeFn(1920, 1080);
+            if (ImGui::Button("1080x720"))
+                m_winResizeFn(1080, 720);
+            if ((ImGui::Button("720x480")))
+                m_winResizeFn(720, 480);
+            ImGui::End();
+        }
+    }
+
+    void
+    Gui::render() const {
+        ImGui::Render();
+    }
 }

@@ -21,17 +21,17 @@
 
 namespace engine {
 
-	class Object
-	{
-	public:
-		Object();
+    class Object
+    {
+    public:
+        Object();
 
 
-	public:
-		void render();
+    public:
+        void render();
 
     private:
         GLuint m_vao;
         GLuint m_vboVertices;
-	};
+    };
 }

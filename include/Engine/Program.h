@@ -22,22 +22,21 @@
 
 namespace engine {
 
-	// @note Can throw std::runtime_error on construction
-	// @see Program(int ac, char * av[]);
-	class Program final
-	{
-	public:
-		// @brief Throw std::runtime_error if Window creation failed
-		// @see Window::Window();
-		Program(int ac, char * av[]);
+    // @note Can throw std::runtime_error on construction
+    // @see Program(int ac, char * av[]);
+    class Program final
+    {
+    public:
+        // @brief Throw std::runtime_error if Window creation failed
+        // @see Window::Window();
+        Program(int ac, char * av[]);
 
-	public:
-		int		run(void);
+    public:
+        int		run(void);
 
 
-	private:
-		Window	m_window;
-		Core	m_core;
-	};
+    private:
+        Window	m_window;
+        Core	m_core;
+    };
 }
-

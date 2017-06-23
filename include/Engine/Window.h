@@ -19,45 +19,48 @@
 
 #include "Engine\Gui.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <memory>
 
-struct	GLFWwindow;
+struct GLFWwindow;
 
 namespace engine {
 
-	// @brief Encapsulate a Window context
-	// For now support only GLFW
-	class Window final
-	{
-	public:
-		// @brief Create a new GLFW window
-		// @note Throw std::runtime_error if GLFW or GLAD Initialization failed
-		Window();
-		~Window();
+    // @brief Encapsulate a Window context
+    // For now support only GLFW
+    class Window final
+    {
+    public:
+        // @brief Create a new GLFW window
+        // @note Throw std::runtime_error if GLFW or GLAD Initialization failed
+        Window();
+        ~Window();
 
-		// Delete copy operations
-		Window(const Window &) = delete;
-		Window & operator=(const Window &) = delete;
+        // Delete copy operations
+        Window(const Window &) = delete;
+        Window & operator=(const Window &) = delete;
 
-		// Define default moving operations
-		Window(Window &&) = default;
-		Window & operator=(Window &&) = default;
+        // Define default moving operations
+        Window(Window &&) = default;
+        Window & operator=(Window &&) = default;
 
 
-	public:
-		/*inline?*/ int should_close() const;
-		void resize(int width, int heigh) const;
+    public:
+        void resize(int width, int heigh) const;
+        inline int should_close() const {
+            return glfwWindowShouldClose(m_window);
+        }
 
-		void update();
-		void render();
+        void update();
+        void render();
 
-	private:
-		void processInputs();
+    private:
+        void processInputs();
 
-	private:
-		GLFWwindow * m_window;
+    private:
+        GLFWwindow * m_window;
 
-		std::unique_ptr<Gui> m_gui;
-	};
+        std::unique_ptr<Gui> m_gui;
+    };
 }
-

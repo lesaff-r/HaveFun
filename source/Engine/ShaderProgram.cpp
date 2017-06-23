@@ -52,7 +52,8 @@ namespace engine {
 
     std::unique_ptr<Shader>
     ShaderProgram::createShader(const std::string & shaderData,
-                                const GLenum shaderType) {
+                                const GLenum shaderType)
+    {
         // Create new shader
         std::unique_ptr<Shader> shader = std::make_unique<Shader>(shaderData, shaderType);
 
@@ -63,7 +64,8 @@ namespace engine {
     }
 
     void
-    ShaderProgram::link() {
+    ShaderProgram::link()
+    {
         // Link shaders
         glLinkProgram(m_id);
 
@@ -79,7 +81,8 @@ namespace engine {
     }
 
     void
-    ShaderProgram::getLogInfos() {
+    ShaderProgram::getLogInfos()
+    {
         // Getting Log length
         GLint infoLogLength;
         glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &infoLogLength);

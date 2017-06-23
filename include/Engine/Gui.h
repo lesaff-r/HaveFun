@@ -23,25 +23,25 @@ struct GLFWwindow;
 
 namespace engine {
 
-	// @brief Handler for imgui
-	class Gui
-	{
-	// @brief Callback for GUI Window resize
-	using WinResizeFn = std::function<void(int, int)>;
+    // @brief Handler for imgui
+    class Gui
+    {
+    // @brief Callback for GUI Window resize
+    using WinResizeFn = std::function<void(int, int)>;
 
-	public:
-		Gui(GLFWwindow * window, WinResizeFn winResizeFn);
-		~Gui();
+    public:
+        Gui(GLFWwindow * window, WinResizeFn winResizeFn);
+        ~Gui();
 
 	
-	public:
-		void update();
-		void render() const;
+    public:
+        void update();
+        void render() const;
 
 
-	private:
-		bool m_resizeWindow;
+    private:
+        bool m_resizeWindow;
 		
-		WinResizeFn m_winResizeFn;
-	};
+        WinResizeFn m_winResizeFn;
+    };
 }

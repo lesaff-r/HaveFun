@@ -21,8 +21,8 @@
 
 namespace engine {
 
-	Object::Object()
-	{
+    Object::Object()
+    {
         // Define a simple triangle
         const float vertexPositions[] = {
             -0.5f, -0.5f, 0.0f, // left
@@ -48,12 +48,12 @@ namespace engine {
         // Unbind VBO and VAO
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-	}
+    }
 
-	void
-	Object::render()
-	{
-		// Bind VAO
+    void
+    Object::render()
+    {
+        // Bind VAO
         glBindVertexArray(m_vao);
 
         // Draw object
@@ -61,5 +61,5 @@ namespace engine {
 
         // Unbind VAO
         glBindVertexArray(0);
-	}
+    }
 }
