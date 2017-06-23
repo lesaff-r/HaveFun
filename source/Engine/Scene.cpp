@@ -15,6 +15,7 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
+#include "config.h"
 #include "Engine\Scene.h"
 #include "Engine\ShaderProgram.h"
 
@@ -22,19 +23,11 @@ namespace engine {
 
 	Scene::Scene()
 	{
-		// Ugly stuff until I support file loading :'(
-		const std::string vertexShaderSource{ "#version 430\n\n"
-			"layout (location = 0) in vec3 Position;\n\n"
-			"void main()\n"
-			"{\n"
-			"   gl_Position = vec4(Position, 1.0);\n"
-			"}\0" };
-		const std::string fragmentShaderSource{ "#version 430\n\n"
-			"out vec4 FragColors;\n\n"
-			"void main()\n"
-			"{\n"
-			"FragColors = vec4(1.0, 0.0, 0.0, 1.0);\n"
-			"}\0" };
+        // Load default shader
+		const std::string vertexShaderSource =
+            std::move(Shader::get(RESOURCES_PATH "default.vs.glsl"));
+        const std::string fragmentShaderSource =
+            std::move(Shader::get(RESOURCES_PATH "default.fs.glsl"));
 
 		// Create new Shader Program
 		m_shaderProgram = std::make_unique<ShaderProgram>(vertexShaderSource,

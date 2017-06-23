@@ -17,38 +17,44 @@
 
 #pragma once
 
+#include "Engine\Shader.h"
+
 #include <glad\glad.h>
 #include <string>
+#include <memory>
 
 namespace engine {
 
-    class Shader
+    class ShaderProgram
     {
     public:
-        Shader(const std::string & data,
-               const GLenum & type);
-        ~Shader();
+        ShaderProgram(const std::string & vertexShader,
+                      const std::string & fragmentShader);
+        ~ShaderProgram();
 
     public:
-        inline unsigned int id() { return m_id; }
-
-        static const std::string get(const std::string & path);
+        void bind();
+        void unbind();
 
 
     private:
-        // @brief Create a new shader of the given type
-        unsigned int createShaderFromType(const GLenum & type);
+        // @brief Create a new Shader object 
+        std::unique_ptr<Shader> createShader(const std::string & shader,
+                                             const GLenum shaderType);
 
-        // @brief Try to compile the shader
-        void compile();
+        // @brief Link all attached shader to the Shader Program
+        void link();
 
         void getLogInfos();
 
     private:
-        GLenum	m_type;
-        GLuint	m_id;
+        GLuint  m_id;
 
-        bool	m_isCompiled;
+        bool    m_isLinked;
+
+    private:
+        // For now
+        std::unique_ptr<Shader> m_vertexShader;
+        std::unique_ptr<Shader> m_fragmentShader;
     };
 }
-

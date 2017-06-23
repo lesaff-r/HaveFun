@@ -19,6 +19,8 @@
 
 #include <glad/glad.h>
 #include <cassert>
+#include <fstream>
+#include <sstream>
 #include <iostream>
 
 namespace engine {
@@ -101,5 +103,26 @@ namespace engine {
 
         // Then delete log container
         delete[] infoLog;
+    }
+
+
+    const std::string
+    Shader::get(const std::string & path) {
+        // Try to open shader file
+        std::ifstream file(path.c_str());
+
+        // Check if file's opening failed
+        if (!file.good())
+            std::cout << "[ERROR] Failed to open shader: " << path << std::endl;
+
+        // Create a stringstream and dump the shader content into it
+        std::stringstream stream;
+        stream << file.rdbuf();
+
+        // Close shader file
+        file.close();
+
+        // Return shader file content as string
+        return stream.str();
     }
 }

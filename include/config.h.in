@@ -17,38 +17,4 @@
 
 #pragma once
 
-#include <glad\glad.h>
-#include <string>
-
-namespace engine {
-
-    class Shader
-    {
-    public:
-        Shader(const std::string & data,
-               const GLenum & type);
-        ~Shader();
-
-    public:
-        inline unsigned int id() { return m_id; }
-
-        static const std::string get(const std::string & path);
-
-
-    private:
-        // @brief Create a new shader of the given type
-        unsigned int createShaderFromType(const GLenum & type);
-
-        // @brief Try to compile the shader
-        void compile();
-
-        void getLogInfos();
-
-    private:
-        GLenum	m_type;
-        GLuint	m_id;
-
-        bool	m_isCompiled;
-    };
-}
-
+#define     RESOURCES_PATH   "@RESOURCES_PATH@/"
