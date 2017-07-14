@@ -15,29 +15,15 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
 #include "Engine\Material.h"
-
-#include <glad\glad.h>
 
 namespace engine {
 
-    class Object
-    {
-    public:
-        Object();
+    Material::Material() :
+        m_diffuse(glm::vec4{255, 255, 255, 255})
+    {}
 
-
-    public:
-        void render();
-
-    private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material;
-    };
+    Material::Material(glm::vec4 & diffuse) :
+        m_diffuse(diffuse)
+    {}
 }

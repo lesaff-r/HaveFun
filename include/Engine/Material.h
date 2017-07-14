@@ -17,27 +17,18 @@
 
 #pragma once
 
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
-#include <glad\glad.h>
+#include <glm/glm.hpp>
 
 namespace engine {
 
-    class Object
+    class Material
     {
     public:
-        Object();
+        Material();
+        Material(glm::vec4 & diffuse);
 
-
-    public:
-        void render();
 
     private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material;
+        glm::vec4 m_diffuse;
     };
 }

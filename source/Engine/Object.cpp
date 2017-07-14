@@ -17,49 +17,67 @@
 
 #include "Engine\Object.h"
 
-#include <glad\glad.h>
-
 namespace engine {
 
-    Object::Object()
+    Object::Object() :
+        m_vboVertices{GL_ARRAY_BUFFER, GL_STATIC_DRAW},
+        m_material{} // TODO: Unused for now
     {
         // Define a simple triangle
-        const float vertexPositions[] = {
-            -0.5f, -0.5f, 0.0f, // left
-            0.5f, -0.5f, 0.0f, // right
-            0.0f,  0.5f, 0.0f  // top
+        // TODO: In the end should be
+        // Position / Normals / Colors / UVs (Encapsulated in an object?)
+        const float vertices[] = {
+            // Position             Color 
+            -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   // left
+            0.5f,  -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   // right
+            0.0f,   0.5f, 0.0f,     1.0f, 0.0f, 0.0f    // top
         };
 
-        // Create and bind VAO
-        glGenVertexArrays(1, &m_vao);
-        glBindVertexArray(m_vao);
+        // Bind VAO
+        m_vao.bind();
 
-        // Create a VBO for vertices then bind it
-        glGenBuffers(1, &m_vboVertices);
-        glBindBuffer(GL_ARRAY_BUFFER, m_vboVertices);
+        // Bind VBO for vertices Positions
+        m_vboVertices.bind();
 
-        // Create memory space and store data for current bound Vertex Buffer Object
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
+        // Init VBO with vertices data
+        m_vboVertices.init(sizeof(vertices), vertices);
 
+        // TODO: Do something with this
+        constexpr GLint positionSize = 3;
+        constexpr GLsizei positionStride = sizeof(float) * 6;
+        constexpr GLvoid * positionPointer = nullptr;
         // Define the vertex buffer data interpretation for current bound Vertex Buffer Object
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
+        glVertexAttribPointer(0, positionSize,
+                              GL_FLOAT, GL_FALSE,
+                              positionStride, positionPointer);
+
+
+        constexpr GLint colorSize = 3;
+        constexpr GLsizei colorStride = sizeof(float) * 6;
+        const GLvoid * colorPointer = reinterpret_cast<GLvoid*>(sizeof(float) * 3);
+        // Define the vertex buffer data interpretation for current bound Vertex Buffer Object
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, colorSize,
+            GL_FLOAT, GL_FALSE,
+            colorStride, colorPointer);
+
 
         // Unbind VBO and VAO
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+        m_vboVertices.unbind();
+        m_vao.unbind();
     }
 
     void
     Object::render()
     {
         // Bind VAO
-        glBindVertexArray(m_vao);
+        m_vao.bind();
 
         // Draw object
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // Unbind VAO
-        glBindVertexArray(0);
+        m_vao.unbind();
     }
 }

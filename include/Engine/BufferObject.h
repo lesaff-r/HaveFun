@@ -17,27 +17,29 @@
 
 #pragma once
 
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
 #include <glad\glad.h>
 
 namespace engine {
 
-    class Object
+    // @brief Encapsulation of a Vertex Buffer Object for the OpenGL API
+    class BufferObject final
     {
     public:
-        Object();
-
+        BufferObject(GLenum type, GLenum usage);
 
     public:
-        void render();
+        // @brief Create memory space and store data for current bound Vertex Buffer Object
+        void init(GLsizeiptr size, const GLvoid * data);
+
+        void bind();
+        void unbind();
+
 
     private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
+        // @brief Vertex Buffer Object Id
+        GLuint m_vbo;
 
-        Material m_material;
+        GLenum m_type;
+        GLenum m_usage;
     };
 }

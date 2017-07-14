@@ -32,24 +32,24 @@
 
 find_path( GLFW_INCLUDE_DIR 
     NAMES
-    GLFW/glfw3.h
+		GLFW/glfw3.h
     HINTS
-    "${GLFW_LOCATION}/include"
-    "$ENV{GLFW_LOCATION}/include"
+		"${GLFW_LOCATION}/include"
+		"$ENV{GLFW_LOCATION}/include"
     PATHS
-    "$ENV{PROGRAMFILES}/GLFW/include"
-    "${OPENGL_INCLUDE_DIR}"
-    /usr/openwin/share/include
-    /usr/openwin/include
-    /usr/X11R6/include
-    /usr/include/X11
-    /opt/graphics/OpenGL/include
-    /opt/graphics/OpenGL/contrib/libglfw
-    /usr/local/include
-    /usr/include/GL
-    /usr/include
+		"$ENV{PROGRAMFILES}/GLFW/include"
+		"${OPENGL_INCLUDE_DIR}"
+		/usr/openwin/share/include
+		/usr/openwin/include
+		/usr/X11R6/include
+		/usr/include/X11
+		/opt/graphics/OpenGL/include
+		/opt/graphics/OpenGL/contrib/libglfw
+		/usr/local/include
+		/usr/include/GL
+		/usr/include
     DOC 
-    "The directory where GLFW/glfw3.h resides"
+		"The directory where GLFW/glfw3.h resides"
     )
 
 #
@@ -57,24 +57,24 @@ find_path( GLFW_INCLUDE_DIR
 #
 find_path( GLFW_INCLUDE_DIR 
     NAMES
-    GL/glfw.h
+		GL/glfw.h
     HINTS
-    "${GLFW_LOCATION}/include"
-    "$ENV{GLFW_LOCATION}/include"
+		"${GLFW_LOCATION}/include"
+		"$ENV{GLFW_LOCATION}/include"
     PATHS
-    "$ENV{PROGRAMFILES}/GLFW/include"
-    "${OPENGL_INCLUDE_DIR}"
-    /usr/openwin/share/include
-    /usr/openwin/include
-    /usr/X11R6/include
-    /usr/include/X11
-    /opt/graphics/OpenGL/include
-    /opt/graphics/OpenGL/contrib/libglfw
-    /usr/local/include
-    /usr/include/GL
-    /usr/include
+		"$ENV{PROGRAMFILES}/GLFW/include"
+		"${OPENGL_INCLUDE_DIR}"
+		/usr/openwin/share/include
+		/usr/openwin/include
+		/usr/X11R6/include
+		/usr/include/X11
+		/opt/graphics/OpenGL/include
+		/opt/graphics/OpenGL/contrib/libglfw
+		/usr/local/include
+		/usr/include/GL
+		/usr/include
     DOC 
-    "The directory where GL/glfw.h resides"
+		"The directory where GL/glfw.h resides"
     )
 
 if (WIN32)

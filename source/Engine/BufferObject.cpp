@@ -15,29 +15,31 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\ArrayObject.h"
 #include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
-#include <glad\glad.h>
 
 namespace engine {
 
-    class Object
+    BufferObject::BufferObject(GLenum type, GLenum usage) :
+        m_vbo{0},
+        m_type{type},
+        m_usage{usage}
     {
-    public:
-        Object();
+        glGenBuffers(1, &m_vbo);
+    }
 
 
-    public:
-        void render();
+    void
+    BufferObject::init(GLsizeiptr size, const GLvoid * data) {
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    }
 
-    private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
+    void
+    BufferObject::bind() {
+        glBindBuffer(m_type, m_vbo);
+    }
 
-        Material m_material;
-    };
+    void
+    BufferObject::unbind() {
+        glBindBuffer(m_type, 0);
+    }
 }

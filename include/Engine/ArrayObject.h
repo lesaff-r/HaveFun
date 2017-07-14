@@ -17,27 +17,23 @@
 
 #pragma once
 
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
 #include <glad\glad.h>
 
 namespace engine {
 
-    class Object
+    // @brief Encapsulation of a Vertex Array Object for the OpenGL API
+    class ArrayObject final
     {
-    public:
-        Object();
-
 
     public:
-        void render();
+        ArrayObject();
+
+    public:
+        void bind();
+        void unbind();
+
 
     private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material;
+        GLuint m_vao;
     };
 }
