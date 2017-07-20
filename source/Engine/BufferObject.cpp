@@ -19,7 +19,7 @@
 
 namespace engine {
 
-    BufferObject::BufferObject(GLenum type, GLenum usage) :
+    BufferObject::BufferObject(const GLenum type, const GLenum usage) :
         m_vbo{0},
         m_type{type},
         m_usage{usage}
@@ -29,17 +29,17 @@ namespace engine {
 
 
     void
-    BufferObject::init(GLsizeiptr size, const GLvoid * data) {
-        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+    BufferObject::init(const GLsizeiptr size, const GLvoid * data) const {
+        glBufferData(m_type, size, data, m_usage);
     }
 
     void
-    BufferObject::bind() {
-        glBindBuffer(m_type, m_vbo);
-    }
-
-    void
-    BufferObject::unbind() {
-        glBindBuffer(m_type, 0);
+    BufferObject::attribute(const GLuint index, const GLint size,
+                            const GLsizei stride, const GLvoid * pointer) const
+    {
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(index, size,
+                              GL_FLOAT, GL_FALSE,
+                              stride, pointer);
     }
 }

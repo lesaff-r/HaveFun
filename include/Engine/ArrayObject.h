@@ -29,8 +29,12 @@ namespace engine {
         ArrayObject();
 
     public:
-        void bind();
-        void unbind();
+        inline void bind() const {
+            glBindVertexArray(m_vao);
+        }
+        inline void unbind() const {
+            glBindVertexArray(0);
+        }
 
 
     private:

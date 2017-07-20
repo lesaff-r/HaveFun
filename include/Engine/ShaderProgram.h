@@ -45,7 +45,7 @@ namespace engine {
         // @brief Link all attached shader to the Shader Program
         void link();
 
-        void getLogInfos();
+        void getLogInfos() const;
 
     private:
         GLuint  m_id;

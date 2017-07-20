@@ -25,21 +25,30 @@ namespace engine {
     class BufferObject final
     {
     public:
-        BufferObject(GLenum type, GLenum usage);
+        BufferObject(const GLenum type, const GLenum usage);
 
     public:
         // @brief Create memory space and store data for current bound Vertex Buffer Object
-        void init(GLsizeiptr size, const GLvoid * data);
+        void init(const GLsizeiptr size, const GLvoid * data) const;
 
-        void bind();
-        void unbind();
+        // @brief Define the vertex buffer data interpretation for current bound Vertex Buffer Object
+        void attribute(const GLuint index, const GLint size,
+                       const GLsizei stride, const GLvoid * pointer) const;
+
+
+        inline void bind() const {
+            glBindBuffer(m_type, m_vbo);
+        }
+        inline void unbind() const {
+            glBindBuffer(m_type, 0);
+        }
 
 
     private:
         // @brief Vertex Buffer Object Id
         GLuint m_vbo;
 
-        GLenum m_type;
-        GLenum m_usage;
+        const GLenum m_type;
+        const GLenum m_usage;
     };
 }

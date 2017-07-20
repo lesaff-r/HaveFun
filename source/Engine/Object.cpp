@@ -29,39 +29,24 @@ namespace engine {
         const float vertices[] = {
             // Position             Color 
             -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   // left
-            0.5f,  -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   // right
-            0.0f,   0.5f, 0.0f,     1.0f, 0.0f, 0.0f    // top
+            0.5f,  -0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   // right
+            0.0f,   0.5f, 0.0f,     1.0f, 0.0f, 1.0f    // top
         };
 
-        // Bind VAO
-        m_vao.bind();
 
-        // Bind VBO for vertices Positions
+        // Bind VAO and VBO
+        m_vao.bind();
         m_vboVertices.bind();
 
         // Init VBO with vertices data
         m_vboVertices.init(sizeof(vertices), vertices);
 
-        // TODO: Do something with this
-        constexpr GLint positionSize = 3;
-        constexpr GLsizei positionStride = sizeof(float) * 6;
-        constexpr GLvoid * positionPointer = nullptr;
-        // Define the vertex buffer data interpretation for current bound Vertex Buffer Object
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, positionSize,
-                              GL_FLOAT, GL_FALSE,
-                              positionStride, positionPointer);
-
-
-        constexpr GLint colorSize = 3;
-        constexpr GLsizei colorStride = sizeof(float) * 6;
-        const GLvoid * colorPointer = reinterpret_cast<GLvoid*>(sizeof(float) * 3);
-        // Define the vertex buffer data interpretation for current bound Vertex Buffer Object
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, colorSize,
-            GL_FLOAT, GL_FALSE,
-            colorStride, colorPointer);
-
+        // Define interpretation for Position attribute
+        m_vboVertices.attribute(0, 3, sizeof(float) * 6,
+                                nullptr);
+        // Define interpretation for Color attribute
+        m_vboVertices.attribute(1, 3, sizeof(float) * 6,
+                                reinterpret_cast<GLvoid*>(sizeof(float) * 3));
 
         // Unbind VBO and VAO
         m_vboVertices.unbind();

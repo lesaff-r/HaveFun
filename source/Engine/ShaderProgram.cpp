@@ -81,7 +81,7 @@ namespace engine {
     }
 
     void
-    ShaderProgram::getLogInfos()
+    ShaderProgram::getLogInfos() const
     {
         // Getting Log length
         GLint infoLogLength;

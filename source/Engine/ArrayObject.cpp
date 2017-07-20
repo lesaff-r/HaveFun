@@ -8,14 +8,4 @@ namespace engine {
         glGenVertexArrays(1, &m_vao);
     }
 
-
-    void
-    ArrayObject::bind() {
-        glBindVertexArray(m_vao);
-    }
-
-    void
-    ArrayObject::unbind() {
-        glBindVertexArray(0);
-    }
 }
