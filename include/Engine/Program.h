@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "Engine\EventManager.h"
 #include "Engine/Window.h"
 #include "Engine/Core.h"
 
@@ -36,7 +37,8 @@ namespace engine {
 
 
     private:
-        Window	m_window;
-        Core	m_core;
+        EventManager m_eventManager;
+        Window       m_window;
+        Core         m_core;
     };
 }

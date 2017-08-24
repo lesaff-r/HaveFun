@@ -15,28 +15,35 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#include "Engine/Program.h"
+#include "Engine\Camera.h"
+#include "Engine\Event.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 namespace engine {
 
-    Program::Program(int argc, char * argv[]) :
-        m_eventManager{},
-        m_window{m_eventManager},
-        m_core{m_eventManager}
-    {}
-
-    int
-    Program::run(void)
+    Camera::Camera() :
+        m_position{0.0f, 0.0f, 3.0f},
+        m_target{0.0f, 0.0f, 0.0f},
+        m_worldUp{0.0f, 1.0f, 0.0f},
+        m_view{0}
     {
-        while (!m_window.should_close())
-        {
-            m_window.update();
+        m_view = glm::lookAt(m_position,
+                           m_target,
+                           m_worldUp);
+    }
 
-            m_core.update();
-            m_core.render();
+    bool
+    Camera::onEvent(const SEvent & event)
+    {
+        if (event.EventType == EEventType::EET_KEY_EVENT)
+            move();
+        return true;
+    }
 
-            m_window.render();
-        }
-        return EXIT_SUCCESS;
+    void
+    Camera::move()
+    {
+        std::cout << "I'm moving!" << std::endl;
     }
 }

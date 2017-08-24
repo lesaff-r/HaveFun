@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "Engine\EventManager.h"
 #include "Engine\Scene.h"
 
 namespace engine {
@@ -24,11 +25,18 @@ namespace engine {
     class Core
     {
     public:
-        Core();
+        Core(EventManager & eventManager);
 
 
     public:
+        void update();
         void render();
+
+    public:
+        bool onEvent(const SEvent & event);
+
+    private:
+        EventManager & m_eventManager;
 
     private:
         Scene m_scene;

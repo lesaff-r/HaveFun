@@ -15,28 +15,46 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#include "Engine/Program.h"
+#pragma once
+
+#include <glm\glm.hpp>
+
+namespace engine {
+    struct SEvent;
+}
 
 namespace engine {
 
-    Program::Program(int argc, char * argv[]) :
-        m_eventManager{},
-        m_window{m_eventManager},
-        m_core{m_eventManager}
-    {}
-
-    int
-    Program::run(void)
+    class Camera
     {
-        while (!m_window.should_close())
-        {
-            m_window.update();
+    public:
+        Camera();
 
-            m_core.update();
-            m_core.render();
 
-            m_window.render();
-        }
-        return EXIT_SUCCESS;
-    }
+    public:
+        bool onEvent(const SEvent & event);
+
+
+    private:
+        void move();
+
+    private:
+        // The camera position
+        glm::vec3   m_position;
+
+        // The position the camera is looking at
+        glm::vec3   m_target;
+
+        // Defines the UP vector for the world
+        // @note Shoud be Y up
+        glm::vec3   m_worldUp;
+
+        // The view matrix for the camera
+        glm::mat4   m_view;
+
+        // Vectors to be used later for camera movements
+        glm::vec3   m_front;
+        glm::vec3   m_right;
+        glm::vec3   m_up;
+    };
 }

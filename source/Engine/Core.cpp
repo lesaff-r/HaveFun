@@ -19,13 +19,31 @@
 
 namespace engine {
 
-    Core::Core() : 
+    Core::Core(EventManager & eventManager) :
+        m_eventManager{eventManager},
         m_scene{}
-    {}
+    {
+        auto onEventFn = [this](const SEvent & event) {
+            return this->onEvent(event);
+        };
+        m_eventManager.registerCallback(onEventFn);
+    }
 
+
+    void
+    Core::update() {
+        m_scene.update();
+    }
 
     void
     Core::render() {
         m_scene.render();
+    }
+
+
+    bool
+    Core::onEvent(const SEvent & event)
+    {
+        return m_scene.onEvent(event);
     }
 }

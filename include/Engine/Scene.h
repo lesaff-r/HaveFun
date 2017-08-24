@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "Engine\Camera.h"
 #include "Engine\Object.h"
 #include "Engine\ShaderProgram.h"
 
@@ -24,20 +25,34 @@
 #include <memory>
 
 namespace engine {
+    struct SEvent;
+}
 
+namespace engine {
+
+    // TODO : Need sceneNodes and a SceneManager 
     class Scene
     {
     public:
         Scene();
 
+
     public:
+        void update();
         void render();
+
+    public:
+        bool onEvent(const SEvent & event);
 
 
     private:
-        std::list<std::unique_ptr<Object>> m_objects;
+        // The active Camera used to view the scene
+        Camera m_camera;
+
+        // All the objects in the Scene
+        std::list<std::unique_ptr<Object>>  m_objects;
 
         // TODO: For now but will late be a material in the object
-        std::unique_ptr<ShaderProgram> m_shaderProgram;
+        std::unique_ptr<ShaderProgram>      m_shaderProgram;
     };
 }

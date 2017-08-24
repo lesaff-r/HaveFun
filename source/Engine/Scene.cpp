@@ -18,11 +18,14 @@
 #include "config.h"
 #include "Engine\Scene.h"
 #include "Engine\ShaderProgram.h"
+#include "Engine\Event.h"
 
 namespace engine {
 
-    Scene::Scene()
+    Scene::Scene() :
+        m_camera{}
     {
+        // TODO: Something better for shader loading
         // Load default shader
         const std::string vertexShaderSource =
             std::move(Shader::get(RESOURCES_PATH "default.vs.glsl"));
@@ -34,10 +37,18 @@ namespace engine {
 														  fragmentShaderSource);
         // TODO: m_shaderProgram->attachShader()?
 
+        // TODO: Objects & Scene loader ...
+
         // New Test Object
         m_objects.emplace_back(std::make_unique<Object>());
     }
 
+
+    void
+    Scene::update()
+    {
+
+    }
 
     void
     Scene::render()
@@ -60,5 +71,12 @@ namespace engine {
 
         // Unbind Shader Program
         m_shaderProgram->unbind();
+    }
+
+
+    bool
+    Scene::onEvent(const SEvent & event)
+    {
+        return m_camera.onEvent(event);
     }
 }

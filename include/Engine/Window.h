@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "Engine\EventManager.h"
 #include "Engine\Gui.h"
 
 #include <glad/glad.h>
@@ -34,7 +35,7 @@ namespace engine {
     public:
         // @brief Create a new GLFW window
         // @note Throw std::runtime_error if GLFW or GLAD Initialization failed
-        Window();
+        Window(EventManager & eventManager);
         ~Window();
 
         // Delete copy operations
@@ -47,16 +48,21 @@ namespace engine {
 
 
     public:
-        void resize(int width, int heigh) const;
         inline int should_close() const {
             return glfwWindowShouldClose(m_window);
         }
 
+    public:
         void update();
         void render();
 
+
     private:
+        void resize(int width, int heigh) const;
         void processInputs();
+
+    private:
+        EventManager & m_eventManager;
 
     private:
         GLFWwindow * m_window;

@@ -15,28 +15,33 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#include "Engine/Program.h"
+#pragma once
+
+#include "Engine\Event.h"
+
+#include <unordered_map>
+#include <functional>
 
 namespace engine {
 
-    Program::Program(int argc, char * argv[]) :
-        m_eventManager{},
-        m_window{m_eventManager},
-        m_core{m_eventManager}
-    {}
-
-    int
-    Program::run(void)
+    class EventManager final
     {
-        while (!m_window.should_close())
-        {
-            m_window.update();
+    // @brief Callbacks to process Events
+    using EventCallbackFn = std::function<bool(const SEvent &)>;
 
-            m_core.update();
-            m_core.render();
+    public:
+        EventManager();
 
-            m_window.render();
-        }
-        return EXIT_SUCCESS;
-    }
+
+    public:
+        void registerCallback(/*const EEventType & eventType,*/
+                              const EventCallbackFn && callback);
+
+        // Notify the EventManager that an Event has occured
+        void notify(const SEvent & event);
+
+    private:
+        std::unordered_map<EEventType, std::list<EventCallbackFn>> m_callbacks;
+        EventCallbackFn test;
+    };
 }

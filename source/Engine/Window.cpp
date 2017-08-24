@@ -22,7 +22,8 @@
 
 namespace engine {
 
-    Window::Window()
+    Window::Window(EventManager & eventManager) :
+        m_eventManager{eventManager}
     {
         // GLFW Initialization
         if (!glfwInit())
@@ -43,17 +44,26 @@ namespace engine {
         // Makes current Window context
         glfwMakeContextCurrent(m_window);
 
+        // Set glfw user pointer to this object
+        // Used to get member data from glfw callbacks
+        glfwSetWindowUserPointer(m_window, this);
+
+
         // Glad Initialization
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
             glfwTerminate();
             throw std::runtime_error{ "[ERROR] GLAD Initialization failed" };
         }
 
-        // Initialize GUI
+
+        // GUI Initialization
         auto winResizeFn = [this](int width, int heigh) {
             this->resize(width, heigh);
         };
         m_gui = std::make_unique<Gui>(m_window, winResizeFn);
+
+
+        // TODO: Events callback Initialization ?
     }
 
     Window::~Window()
@@ -85,14 +95,20 @@ namespace engine {
 
     void
     Window::resize(int width, int heigh) const {
+        SEvent test;
+
+        test.EventType = EEventType::EET_KEY_EVENT;
+        test.ResizeEvent.width = width;
+        test.ResizeEvent.heigh = heigh;
+        m_eventManager.notify(test);
+
         glfwSetWindowSize(m_window, width, heigh);
     }
-
 
     void
     Window::processInputs()
     {
-        // Use this or use 
+        // Use glfwGetKey or use
         // glfwSetKeyCallback(window, key_callback);
         // for more a generic way to manage events
         if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)

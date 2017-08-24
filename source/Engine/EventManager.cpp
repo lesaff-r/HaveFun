@@ -15,28 +15,25 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#include "Engine/Program.h"
+#include "Engine/EventManager.h"
 
 namespace engine {
 
-    Program::Program(int argc, char * argv[]) :
-        m_eventManager{},
-        m_window{m_eventManager},
-        m_core{m_eventManager}
+    EventManager::EventManager()
     {}
 
-    int
-    Program::run(void)
+
+    void
+    EventManager::registerCallback(/*const EEventType & eventType,*/
+                                   const EventCallbackFn && callback)
     {
-        while (!m_window.should_close())
-        {
-            m_window.update();
+        //m_callbacks[eventType].emplace_back(std::move(callback));
+        test = std::move(callback);
+    }
 
-            m_core.update();
-            m_core.render();
-
-            m_window.render();
-        }
-        return EXIT_SUCCESS;
+    void
+    EventManager::notify(const SEvent & event)
+    {   
+        test(event);
     }
 }
