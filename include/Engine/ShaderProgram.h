@@ -20,6 +20,7 @@
 #include "Engine\Shader.h"
 
 #include <glad\glad.h>
+#include <glm\glm.hpp>
 #include <string>
 #include <memory>
 
@@ -36,6 +37,9 @@ namespace engine {
         void bind();
         void unbind();
 
+    public:
+        void setUniform(const std::string & name, const glm::mat4 & mat) const;
+
 
     private:
         // @brief Create a new Shader object 
@@ -45,6 +49,7 @@ namespace engine {
         // @brief Link all attached shader to the Shader Program
         void link();
 
+        // Get debug infos
         void getLogInfos() const;
 
     private:

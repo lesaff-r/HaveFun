@@ -30,7 +30,7 @@ namespace engine {
     using WinResizeFn = std::function<void(int, int)>;
 
     public:
-        Gui(GLFWwindow * window, WinResizeFn winResizeFn);
+        Gui(GLFWwindow * window, const WinResizeFn && winResizeFn);
         ~Gui();
 
 	

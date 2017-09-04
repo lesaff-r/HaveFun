@@ -48,9 +48,7 @@ namespace engine {
 
 
     public:
-        inline int should_close() const {
-            return glfwWindowShouldClose(m_window);
-        }
+        inline int should_close() const     { return glfwWindowShouldClose(m_window); }
 
     public:
         void update();
@@ -58,8 +56,20 @@ namespace engine {
 
 
     private:
+        // Called when the window detect a keyboard input
+        // Also used to notify EventManager that a keyboard event has occured
+        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+        // Handle Keyboard Events
+        bool onKeyEvent(const SEvent & event);
+
+    private:
+        // Close the window
+        void close() const;
+
+        // Resize the window
+        // TODO: Or changed resolution if full screen
         void resize(int width, int heigh) const;
-        void processInputs();
 
     private:
         EventManager & m_eventManager;

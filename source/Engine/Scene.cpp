@@ -20,6 +20,8 @@
 #include "Engine\ShaderProgram.h"
 #include "Engine\Event.h"
 
+#include <glm\gtx\transform.hpp>
+
 namespace engine {
 
     Scene::Scene() :
@@ -47,22 +49,34 @@ namespace engine {
     void
     Scene::update()
     {
-
+        m_camera.update();
     }
 
     void
     Scene::render()
     {
-        // TODO: Should be in a renderer
+        // TODO: Should be in a renderer!
+
+
         // Clear Buffers
         glClearColor(0.2f, 0.2f, .2f, 0);
-        glClear(GL_COLOR_BUFFER_BIT);
-        // For later
-        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // glEnable(GL_DEPTH_TEST);
+
+        glEnable(GL_DEPTH_TEST);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+        const glm::mat4 & view = m_camera.getViewMatrix();
+        const glm::mat4 & projection = m_camera.getProjectionMatrix();
+
 
         // Bind Shader Program
         m_shaderProgram->bind();
+
+        // TODO: for now
+        glm::mat4 model{ 1 };
+
+        glm::mat4 mvp = projection * view * model;
+        m_shaderProgram->setUniform("mvp", mvp);
 
         for (auto & object : m_objects)
         {

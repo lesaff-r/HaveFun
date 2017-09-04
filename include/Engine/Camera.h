@@ -32,29 +32,46 @@ namespace engine {
 
 
     public:
+        inline const glm::mat4 & getViewMatrix()        { return m_view; }
+        inline const glm::mat4 & getProjectionMatrix()  { return m_projection; }
+
+    public:
+        void update();
         bool onEvent(const SEvent & event);
 
 
     private:
-        void move();
+        void move(const SEvent & event);
 
     private:
+        // TODO: Need CamData structure
         // The camera position
         glm::vec3   m_position;
 
         // The position the camera is looking at
         glm::vec3   m_target;
 
-        // Defines the UP vector for the world
+        // Defines the Up vector from the world
         // @note Shoud be Y up
-        glm::vec3   m_worldUp;
+        glm::vec3   m_camUp;
 
         // The view matrix for the camera
         glm::mat4   m_view;
 
-        // Vectors to be used later for camera movements
-        glm::vec3   m_front;
-        glm::vec3   m_right;
-        glm::vec3   m_up;
+        // The projection matrix for the camera
+        glm::mat4   m_projection;
+
+        // Perspective data for porjection matrix
+        float m_fov = 45.0f;
+        float m_aspectRatio = 4.0f/3.0f;
+        float m_nearZ = 0.1f;
+        float m_farZ = 1000.0f;
+
+        // TODO: Need Camera controller
+        // Variables for camera movement
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
     };
 }

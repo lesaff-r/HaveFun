@@ -17,10 +17,13 @@
 
 #pragma once
 
-#include "Engine\Event.h"
-
 #include <unordered_map>
 #include <functional>
+
+namespace engine {
+    struct SEvent;
+    enum class EEventType;
+}
 
 namespace engine {
 
@@ -41,7 +44,9 @@ namespace engine {
         void notify(const SEvent & event);
 
     private:
-        std::unordered_map<EEventType, std::list<EventCallbackFn>> m_callbacks;
-        EventCallbackFn test;
+        // Callback for the Engine to manage Events
+        EventCallbackFn m_callback;
+
+        //std::unordered_map<EEventType, std::list<EventCallbackFn>> m_callbacks;
     };
 }

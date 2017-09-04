@@ -28,12 +28,12 @@ namespace engine {
                                    const EventCallbackFn && callback)
     {
         //m_callbacks[eventType].emplace_back(std::move(callback));
-        test = std::move(callback);
+        m_callback = std::move(callback);
     }
 
     void
     EventManager::notify(const SEvent & event)
     {   
-        test(event);
+        m_callback(event);
     }
 }

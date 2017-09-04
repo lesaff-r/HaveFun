@@ -31,6 +31,13 @@ namespace engine {
         EET_RESIZE
     };
 
+    enum class EEventState
+    {
+        EES_RELEASE,
+        EES_PRESS,
+        EES_REPEAT
+    };
+
     struct SEvent {
 
         // Type of the current Event
@@ -53,7 +60,7 @@ namespace engine {
             EKeyCode Key;
 
             // Status to know if the Key is Pressed or Released
-            bool Pressed;
+            EEventState Pressed;
 
             // TODO: Add modifiers (shift, alt, ctrl) ?
         };

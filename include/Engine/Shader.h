@@ -30,7 +30,7 @@ namespace engine {
         ~Shader();
 
     public:
-        inline unsigned int id() { return m_id; }
+        inline unsigned int id()    { return m_id; }
 
         static const std::string get(const std::string & path);
 

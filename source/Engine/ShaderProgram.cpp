@@ -18,6 +18,7 @@
 #include "Engine\ShaderProgram.h"
 
 #include <glad\glad.h>
+#include <glm\gtc\type_ptr.hpp>
 #include <iostream>
 
 namespace engine {
@@ -47,6 +48,15 @@ namespace engine {
     void
     ShaderProgram::unbind() {
         glUseProgram(0);
+    }
+
+
+    void
+    ShaderProgram::setUniform(const std::string & name, const glm::mat4 & mat) const
+    {
+        int location = glGetUniformLocation(this->m_id, name.c_str());
+        // TODO: If location == -1 then could not be fond!
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
     }
 
 

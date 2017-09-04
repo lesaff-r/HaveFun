@@ -22,7 +22,7 @@
 
 namespace engine {
 
-    Gui::Gui(GLFWwindow * window, Gui::WinResizeFn winResizeFn) :
+    Gui::Gui(GLFWwindow * window, const Gui::WinResizeFn && winResizeFn) :
         m_resizeWindow{true},
         m_winResizeFn{ std::move(winResizeFn) }
     {
@@ -36,7 +36,7 @@ namespace engine {
 
 
 	void
-        Gui::update()
+    Gui::update()
     {
         ImGui_ImplGlfwGL3_NewFrame();
 

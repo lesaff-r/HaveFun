@@ -24,17 +24,13 @@ namespace engine {
     // @brief Encapsulation of a Vertex Array Object for the OpenGL API
     class ArrayObject final
     {
-
     public:
         ArrayObject();
 
+
     public:
-        inline void bind() const {
-            glBindVertexArray(m_vao);
-        }
-        inline void unbind() const {
-            glBindVertexArray(0);
-        }
+        inline void bind() const    { glBindVertexArray(m_vao); }
+        inline void unbind() const  { glBindVertexArray(0); }
 
 
     private:

@@ -32,7 +32,8 @@ namespace engine {
         void update();
         void render();
 
-    public:
+
+    private:
         bool onEvent(const SEvent & event);
 
     private:
