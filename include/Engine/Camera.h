@@ -17,7 +17,10 @@
 
 #pragma once
 
-#include <glm\glm.hpp>
+#include "CameraController.h"
+
+#include <glm\vec3.hpp>
+#include <glm\mat4x4.hpp>
 
 namespace engine {
     struct SEvent;
@@ -25,53 +28,50 @@ namespace engine {
 
 namespace engine {
 
+    struct CameraData
+    {
+        // The camera position
+        glm::vec3   position = glm::vec3{ 0.0f, 0.0f, 10.0f };
+
+        // The position the camera is looking at
+        glm::vec3   target = glm::vec3{ 0.0f, 0.0f, 0.0f };
+
+        // Defines the Up vector from the world
+        // @note Shoud be Y up
+        glm::vec3   camUp = glm::vec3{ 0.0f, 1.0f, 0.0f };
+
+        // The view matrix for the camera
+        glm::mat4   viewMat = glm::mat4{ 1 };
+
+        // The projection matrix for the camera
+        glm::mat4   projectionMat = glm::mat4{ 1 };
+
+        // Perspective data for porjection matrix
+        float fov = 45.0f;
+        float aspectRatio = 4.0f / 3.0f;
+        float nearPlane = 0.1f;
+        float farPlane = 1000.0f;
+    };
+
     class Camera
     {
     public:
         Camera();
 
-
-    public:
-        inline const glm::mat4 & getViewMatrix()        { return m_view; }
-        inline const glm::mat4 & getProjectionMatrix()  { return m_projection; }
-
     public:
         void update();
         bool onEvent(const SEvent & event);
 
+        void attachController(CameraController::UniquePtr controller);
+
+    public:
+        inline const glm::mat4 & getViewMatrix()       { return m_camData.viewMat; }
+        inline const glm::mat4 & getProjectionMatrix() { return m_camData.projectionMat; }
+
 
     private:
-        void move(const SEvent & event);
+        CameraData m_camData;
 
-    private:
-        // TODO: Need CamData structure
-        // The camera position
-        glm::vec3   m_position;
-
-        // The position the camera is looking at
-        glm::vec3   m_target;
-
-        // Defines the Up vector from the world
-        // @note Shoud be Y up
-        glm::vec3   m_camUp;
-
-        // The view matrix for the camera
-        glm::mat4   m_view;
-
-        // The projection matrix for the camera
-        glm::mat4   m_projection;
-
-        // Perspective data for porjection matrix
-        float m_fov = 45.0f;
-        float m_aspectRatio = 4.0f/3.0f;
-        float m_nearZ = 0.1f;
-        float m_farZ = 1000.0f;
-
-        // TODO: Need Camera controller
-        // Variables for camera movement
-        bool up = false;
-        bool down = false;
-        bool left = false;
-        bool right = false;
+        CameraController::UniquePtr p_camController;
     };
 }

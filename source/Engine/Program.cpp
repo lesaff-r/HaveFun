@@ -20,9 +20,8 @@
 namespace engine {
 
     Program::Program(int argc, char * argv[]) :
-        m_eventManager{},
-        m_window{m_eventManager},
-        m_core{m_eventManager}
+        m_window{ m_eventManager },
+        m_core{ m_eventManager }
     {}
 
     int

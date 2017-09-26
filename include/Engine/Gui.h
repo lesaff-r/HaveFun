@@ -18,6 +18,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
 struct GLFWwindow;
 
@@ -28,6 +29,9 @@ namespace engine {
     {
     // @brief Callback for GUI Window resize
     using WinResizeFn = std::function<void(int, int)>;
+
+    public:
+        using UniquePtr = std::unique_ptr<Gui>;
 
     public:
         Gui(GLFWwindow * window, const WinResizeFn && winResizeFn);

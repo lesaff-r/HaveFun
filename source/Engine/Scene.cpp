@@ -24,8 +24,7 @@
 
 namespace engine {
 
-    Scene::Scene() :
-        m_camera{}
+    Scene::Scene()
     {
         // TODO: Something better for shader loading
         // Load default shader
@@ -40,6 +39,9 @@ namespace engine {
         // TODO: m_shaderProgram->attachShader()?
 
         // TODO: Objects & Scene loader ...
+
+        // Attach controller to camera
+        m_camera.attachController(std::make_unique<CameraController>());
 
         // New Test Object
         m_objects.emplace_back(std::make_unique<Object>());

@@ -17,42 +17,34 @@
 
 #pragma once
 
-#include "Engine\Camera.h"
-#include "Engine\Object.h"
-#include "Engine\ShaderProgram.h"
-
-#include <list>
 #include <memory>
 
 namespace engine {
     struct SEvent;
+    struct CameraData;
 }
 
 namespace engine {
 
-    // TODO : Need sceneNodes and a SceneManager 
-    class Scene
+    class CameraController
     {
     public:
-        Scene();
-
-
-    public:
-        void update();
-        void render();
+        using UniquePtr = std::unique_ptr<CameraController>;
 
     public:
+        void update(CameraData & camData);
         bool onEvent(const SEvent & event);
 
 
     private:
-        // The active Camera used to view the scene
-        Camera m_camera;
+        void keyEvent(const SEvent & event);
+        void mouseEvent(const SEvent & event);
 
-        // All the objects in the Scene
-        std::list<Object::UniquePtr>  m_objects;
-
-        // TODO: For now but will late be a material in the object
-        std::unique_ptr<ShaderProgram>      m_shaderProgram;
+    private:
+        // Variables for camera movement
+        bool m_up = false;
+        bool m_down = false;
+        bool m_left = false;
+        bool m_right = false;
     };
 }

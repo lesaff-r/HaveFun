@@ -19,20 +19,23 @@
 
 #include <glad\glad.h>
 #include <string>
+#include <memory>
 
 namespace engine {
 
     class Shader
     {
     public:
-        Shader(const std::string & data,
-               const GLenum & type);
+        Shader(const std::string & data, const GLenum & type);
         ~Shader();
 
     public:
         inline unsigned int id()    { return m_id; }
 
         static const std::string get(const std::string & path);
+
+    public:
+        using UniquePtr = std::unique_ptr<Shader>;
 
 
     private:
@@ -48,7 +51,7 @@ namespace engine {
         GLenum	m_type;
         GLuint	m_id;
 
-        bool	m_isCompiled;
+        bool	m_isCompiled = false;
     };
 }
 

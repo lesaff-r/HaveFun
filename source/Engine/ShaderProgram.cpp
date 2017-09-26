@@ -55,17 +55,19 @@ namespace engine {
     ShaderProgram::setUniform(const std::string & name, const glm::mat4 & mat) const
     {
         int location = glGetUniformLocation(this->m_id, name.c_str());
-        // TODO: If location == -1 then could not be fond!
+
+        // Location should always be found
+        assert(location != -1);
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
     }
 
 
-    std::unique_ptr<Shader>
+    Shader::UniquePtr
     ShaderProgram::createShader(const std::string & shaderData,
                                 const GLenum shaderType)
     {
         // Create new shader
-        std::unique_ptr<Shader> shader = std::make_unique<Shader>(shaderData, shaderType);
+        Shader::UniquePtr shader = std::make_unique<Shader>(shaderData, shaderType);
 
         // Attach the shader to the current Shader Program
         glAttachShader(m_id, shader->id());

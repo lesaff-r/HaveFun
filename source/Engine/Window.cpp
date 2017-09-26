@@ -25,7 +25,7 @@
 namespace engine {
 
     Window::Window(EventManager & eventManager) :
-        m_eventManager{eventManager}
+        m_eventManager{ eventManager }
     {
         // GLFW Initialization
         if (!glfwInit())
@@ -67,6 +67,7 @@ namespace engine {
 
         // Callback Initialization
         glfwSetKeyCallback(m_window, &key_callback);
+        glfwSetMouseButtonCallback(m_window, &mouse_button_callback);
     }
 
     Window::~Window()
@@ -96,20 +97,57 @@ namespace engine {
     }
 
 
-    void Window::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    void
+    Window::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         // Get User pointer from Glfw to call Window method
         auto w = static_cast<Window*>(glfwGetWindowUserPointer(window));
 
         // Create and fill Event container
         SEvent event;
-        event.EventType = EEventType::EET_KEY_EVENT;
-        event.KeyEvent.Pressed = static_cast<EEventState>(action);
+        event.EventType = SEvent::EEventType::EET_KEY_EVENT;
+        event.KeyEvent.Pressed = static_cast<SEvent::SKeyEvent::State>(action);
         event.KeyEvent.Key = static_cast<EKeyCode>(key);
 
         // If the key was pressed, process the input
-        if (event.KeyEvent.Pressed == EEventState::EES_PRESS)
+        if (event.KeyEvent.Pressed == SEvent::SKeyEvent::State::Press)
             w->onKeyEvent(event);
+
+        // Notify the EventManager
+        w->m_eventManager.notify(event);
+    }
+
+    void
+    Window::mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
+    {
+        // Get User pointer from Glfw to call Window method
+        auto w = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+        // Create and fill Event container
+        SEvent event;
+        event.EventType = SEvent::EEventType::EET_MOUSE_EVENT;
+        switch (button)
+        {
+        case GLFW_MOUSE_BUTTON_LEFT:
+            event.MouseEvent.type = (action == GLFW_PRESS) ?
+                SEvent::SMouseEvent::Type::LButtonDown : SEvent::SMouseEvent::Type::LButtonUp;
+            break;
+        case GLFW_MOUSE_BUTTON_RIGHT:
+            event.MouseEvent.type = (action == GLFW_PRESS) ?
+                SEvent::SMouseEvent::Type::RButtonDown : SEvent::SMouseEvent::Type::RButtonUp;
+            break;
+        case GLFW_MOUSE_BUTTON_MIDDLE:
+            event.MouseEvent.type = (action == GLFW_PRESS) ?
+                SEvent::SMouseEvent::Type::MidButtonDown : SEvent::SMouseEvent::Type::MidButtonUp;
+            break;
+        default:
+            // Should not be something else
+            break;
+        }
+        double x, y;
+        glfwGetCursorPos(window, &x, &y);
+        event.MouseEvent.pos = glm::vec2{float(x), float(y)};
+
 
         // Notify the EventManager
         w->m_eventManager.notify(event);
@@ -145,7 +183,7 @@ namespace engine {
     Window::resize(int width, int heigh) const {
         SEvent event;
 
-        event.EventType = EEventType::EET_RESIZE;
+        event.EventType = SEvent::EEventType::EET_RESIZE;
         event.ResizeEvent.width = width;
         event.ResizeEvent.heigh = heigh;
         m_eventManager.notify(event);

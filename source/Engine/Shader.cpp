@@ -25,12 +25,9 @@
 
 namespace engine {
 
-    Shader::Shader(const std::string & data,
-                   const GLenum & type) :
+    Shader::Shader(const std::string & data, const GLenum & type) :
         m_type{ type },
-        m_id{ createShaderFromType(type) },
-        m_isCompiled{ false }
-
+        m_id{ createShaderFromType(type) }
     {
         // Attach source code to the given shader
         const char * raw_data = data.c_str();

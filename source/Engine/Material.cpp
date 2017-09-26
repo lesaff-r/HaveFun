@@ -20,7 +20,7 @@
 namespace engine {
 
     Material::Material() :
-        m_diffuse(glm::vec4{255, 255, 255, 255})
+        m_diffuse{ glm::vec4{255, 255, 255, 255} }
     {}
 
     Material::Material(glm::vec4 & diffuse) :

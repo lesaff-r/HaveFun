@@ -20,11 +20,11 @@
 #include "Engine\Shader.h"
 
 #include <glad\glad.h>
-#include <glm\glm.hpp>
+#include <glm\mat4x4.hpp>
 #include <string>
 #include <memory>
 
-namespace engine {
+namespace engine {    
 
     class ShaderProgram
     {
@@ -43,8 +43,8 @@ namespace engine {
 
     private:
         // @brief Create a new Shader object 
-        std::unique_ptr<Shader> createShader(const std::string & shader,
-                                             const GLenum shaderType);
+        Shader::UniquePtr createShader(const std::string & shader,
+                                       const GLenum shaderType);
 
         // @brief Link all attached shader to the Shader Program
         void link();
@@ -59,7 +59,7 @@ namespace engine {
 
     private:
         // For now
-        std::unique_ptr<Shader> m_vertexShader;
-        std::unique_ptr<Shader> m_fragmentShader;
+        Shader::UniquePtr m_vertexShader;
+        Shader::UniquePtr m_fragmentShader;
     };
 }

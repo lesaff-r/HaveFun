@@ -22,6 +22,7 @@
 #include "Engine\Material.h"
 
 #include <glad\glad.h>
+#include <memory>
 
 namespace engine {
 
@@ -34,10 +35,14 @@ namespace engine {
     public:
         void render();
 
+    public:
+        using UniquePtr = std::unique_ptr<Object>;
+
+
     private:
         ArrayObject  m_vao;
         BufferObject m_vboVertices;
 
-        Material m_material;
+        Material m_material; // TODO: Unused for now
     };
 }

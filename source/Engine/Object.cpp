@@ -20,17 +20,16 @@
 namespace engine {
 
     Object::Object() :
-        m_vboVertices{GL_ARRAY_BUFFER, GL_STATIC_DRAW},
-        m_material{} // TODO: Unused for now
+        m_vboVertices{GL_ARRAY_BUFFER, GL_STATIC_DRAW}
     {
         // Define a simple triangle
         // TODO: In the end should be
         // Position / Normals / Colors / UVs (Encapsulated in an object?)
         const float vertices[] = {
             // Position             Color 
-            -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,   // left
-            0.5f,  -0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   // right
-            0.0f,   0.5f, 0.0f,     1.0f, 0.0f, 1.0f    // top
+            -1.0f, -1.0f, 0.0f,     1.0f, 0.0f, 0.0f,   // left
+            1.0f,  -1.0f, 0.0f,     1.0f, 1.0f, 0.0f,   // right
+            0.0f,   1.0f, 0.0f,     1.0f, 0.0f, 1.0f    // top
         };
 
 

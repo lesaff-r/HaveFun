@@ -20,9 +20,9 @@
 namespace engine {
 
     BufferObject::BufferObject(const GLenum type, const GLenum usage) :
-        m_vbo{0},
-        m_type{type},
-        m_usage{usage}
+        m_vbo{ 0 },
+        m_type{ type },
+        m_usage{ usage }
     {
         glGenBuffers(1, &m_vbo);
     }

@@ -17,50 +17,46 @@
 
 #pragma once
 
+#include <glm/vec2.hpp>
+
 namespace engine {
     enum class EKeyCode;
 }
 
 namespace engine {
 
-    // Defines the type of the Input
-    enum class EEventType
-    {
-        EET_KEY_EVENT,
-        EET_MOUSE_EVENT,
-        EET_RESIZE
-    };
-
-    enum class EEventState
-    {
-        EES_RELEASE,
-        EES_PRESS,
-        EES_REPEAT
-    };
-
     struct SEvent {
 
-        // Type of the current Event
-        EEventType EventType;
+        // Defines the type of the Input
+        enum class EEventType
+        {
+            EET_KEY_EVENT,
+            EET_MOUSE_EVENT,
+            EET_RESIZE
+        };
+
+        EEventType EventType;   // Type of the current Event
+
 
         // Container for Resize Event
         struct SResizeEvent
         {
-            // The width of the Window after resize
-            int width;
-
-            // The heigh of the Window after resize
-            int heigh;
+            int width;          // The width of the Window after resize
+            int heigh;          // The heigh of the Window after resize
         };
 
         // Container for Keyboard Events
         struct SKeyEvent
         {
-            // The Key code
-            EKeyCode Key;
+            enum class State
+            {
+                Release,
+                Press,
+                Repeat
+            };
 
-            // Status to know if the Key is Pressed or Released
-            EEventState Pressed;
+            State Pressed;      // Status to know if the Key is Pressed or Released
+            EKeyCode Key;       // The Key code
 
             // TODO: Add modifiers (shift, alt, ctrl) ?
         };
@@ -68,9 +64,24 @@ namespace engine {
         // Container for Mouse Events
         struct SMouseEvent
         {
+            enum class Type
+            {
+                LButtonDown,
+                LButtonUp,
+                RButtonDown,
+                RButtonUp,
+                MidButtonDown,
+                MidButtonUp,
+                Move,
+                Wheel
+            };
 
+            Type type;          // Status to know which Key is Pressed or Released
+            glm::vec2 pos;      // The mouse position
+            float wheel = .0f;        // The mouse wheel offset if Event Type is SMouseEvent::Type::Wheel, otherwise zero 
         };
 
+        SEvent() {}
         // A union to get the informations about the current Input Event
         union
         {

@@ -56,9 +56,9 @@ namespace engine {
 
 
     private:
-        // Called when the window detect a keyboard input
-        // Also used to notify EventManager that a keyboard event has occured
+        // Callbacks used to notify the EventManager that an event has occured
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
         // Handle Keyboard Events
         bool onKeyEvent(const SEvent & event);
@@ -77,6 +77,6 @@ namespace engine {
     private:
         GLFWwindow * m_window;
 
-        std::unique_ptr<Gui> m_gui;
+        Gui::UniquePtr m_gui;
     };
 }

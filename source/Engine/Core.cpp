@@ -20,8 +20,7 @@
 namespace engine {
 
     Core::Core(EventManager & eventManager) :
-        m_eventManager{eventManager},
-        m_scene{}
+        m_eventManager{ eventManager }
     {
         auto onEventFn = [this](const SEvent & event) {
             return this->onEvent(event);
