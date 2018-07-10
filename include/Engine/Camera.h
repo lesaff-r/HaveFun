@@ -46,7 +46,7 @@ namespace engine {
         // The projection matrix for the camera
         glm::mat4   projectionMat = glm::mat4{ 1 };
 
-        // Perspective data for porjection matrix
+        // Perspective data for projection matrix
         float fov = 45.0f;
         float aspectRatio = 4.0f / 3.0f;
         float nearPlane = 0.1f;

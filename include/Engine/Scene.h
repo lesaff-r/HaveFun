@@ -41,7 +41,6 @@ namespace engine {
         void update();
         void render();
 
-    public:
         bool onEvent(const SEvent & event);
 
 
@@ -52,7 +51,7 @@ namespace engine {
         // All the objects in the Scene
         std::list<Object::UniquePtr>  m_objects;
 
-        // TODO: For now but will late be a material in the object
+        // TODO: For now but will later be a material in the object
         std::unique_ptr<ShaderProgram>      m_shaderProgram;
     };
 }

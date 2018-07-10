@@ -4,39 +4,26 @@
 #
 # IMGUI_FOUND
 # IMGUI_INCLUDE_DIR
-# IMGUI_LIBRARY
 # 
 
-SET(IMGUI_SEARCH_PATHS
-	$ENV{IMGUI_ROOT}
-	${DEPENDENCIES_ROOT}
-	/usr/local
-	/usr)
+# Additional modules
+include(FindPackageHandleStandardArgs)
 
 FIND_PATH(IMGUI_INCLUDE_DIR
     NAMES
         imgui.h
     PATHS
-        ${IMGUI_SEARCH_PATHS}
-    PATH_SUFFIXES
-        include
+		${CMAKE_CURRENT_SOURCE_DIR}/include/imgui
+		/usr/local
+		/usr
     DOC
         "The directory where imgui/imgui.h resides"
 )
 
-FIND_LIBRARY(IMGUI_LIBRARY
-    NAMES
-       imgui.lib
-    PATHS
-        ${IMGUI_SEARCH_PATHS}
-    PATH_SUFFIXES
-        lib
-    DOC
-        "The directory where imgui.lib resides"
-)
+find_package_handle_standard_args(IMGUI REQUIRED_VARS IMGUI_INCLUDE_DIR)
 
-SET(IMGUI_FOUND "NO")
-IF (IMGUI_INCLUDE_DIR AND IMGUI_LIBRARY)
-    SET(IMGUI_LIBRARIES ${IMGUI_LIBRARY})
-    SET(IMGUI_FOUND "YES")
-ENDIF (IMGUI_INCLUDE_DIR AND IMGUI_LIBRARY)
+if (IMGUI_FOUND)
+	set(IMGUI_INCLUDE_PATH ${IMGUI_INCLUDE_DIR})
+endif()
+
+mark_as_advanced(IMGUI_INCLUDE_DIR)

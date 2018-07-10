@@ -76,9 +76,9 @@ namespace engine {
                 Wheel
             };
 
-            Type type;          // Status to know which Key is Pressed or Released
-            glm::vec2 pos;      // The mouse position
-            float wheel = .0f;        // The mouse wheel offset if Event Type is SMouseEvent::Type::Wheel, otherwise zero 
+            Type type;              // Status to know which Key is Pressed or Released
+            glm::vec2 pos;          // The mouse position
+            glm::vec2 wheelOffset;  // The mouse wheel offset if Event Type is SMouseEvent::Type::Wheel, otherwise zero 
         };
 
         SEvent() {}

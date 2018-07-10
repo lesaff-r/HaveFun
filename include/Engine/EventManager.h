@@ -38,7 +38,7 @@ namespace engine {
 
     public:
         void registerCallback(/*const EEventType & eventType,*/
-                              const EventCallbackFn && callback);
+                              const EventCallbackFn callback);
 
         // Notify the EventManager that an Event has occured
         void notify(const SEvent & event);

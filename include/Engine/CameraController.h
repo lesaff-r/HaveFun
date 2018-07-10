@@ -17,7 +17,10 @@
 
 #pragma once
 
+#include "Engine\Timer.h"
+
 #include <memory>
+#include <glm/vec2.hpp>
 
 namespace engine {
     struct SEvent;
@@ -37,14 +40,38 @@ namespace engine {
 
 
     private:
-        void keyEvent(const SEvent & event);
-        void mouseEvent(const SEvent & event);
+        void onKeyEvent(const SEvent & event);
+        void onMouseEvent(const SEvent & event);
+
+        void move(CameraData & camData);
+        void rotate(CameraData & camData);
+        void zoom(CameraData & camData);
 
     private:
+        Timer mTimer;
+
         // Variables for camera movement
-        bool m_up = false;
-        bool m_down = false;
-        bool m_left = false;
-        bool m_right = false;
+        union
+        {
+            struct
+            {
+                bool up : 1;
+                bool down : 1;
+                bool left : 1;
+                bool right : 1;
+            };
+            bool move = false;
+        } m_movement;
+
+        bool m_rotate = false;
+        bool m_zoom = false;
+
+        bool m_mouseLeftDown = false;
+        bool m_mouseRightDown = false;
+        bool m_mouseMidddleDown = false;
+
+        glm::vec2 m_mousePos;
+        glm::vec2 m_mousePosDelta;
+        glm::vec2 m_wheelOffset;
     };
 }

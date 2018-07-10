@@ -17,35 +17,32 @@
 
 #pragma once
 
-#include <functional>
-#include <memory>
-
-struct GLFWwindow;
+#include <chrono>
 
 namespace engine {
 
-    // @brief Handler for imgui
-    class Gui
+    class Timer
     {
-    // @brief Callback for GUI Window resize
-    using WinResizeFn = std::function<void(int, int)>;
-
     public:
-        using UniquePtr = std::unique_ptr<Gui>;
+        using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
-    public:
-        Gui(GLFWwindow * window, const WinResizeFn winResizeFn);
-        ~Gui();
+        static TimePoint getCurrentTimePoint()
+        {
+            return std::chrono::high_resolution_clock::now();
+        }
 
-	
-    public:
-        void update();
-        void render() const;
+        void update()
+        {
+            auto now = getCurrentTimePoint();
+            mElapsedTime = now - mCurrentTime;
+            mCurrentTime = now;
+        }
+
+        inline float getElapsedTime() { return static_cast<float>(mElapsedTime.count()); }
 
 
     private:
-        bool m_resizeWindow;
-		
-        WinResizeFn m_winResizeFn;
+        TimePoint mCurrentTime;
+        std::chrono::duration<double> mElapsedTime;
     };
 }

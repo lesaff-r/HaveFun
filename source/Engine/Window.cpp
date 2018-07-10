@@ -64,10 +64,11 @@ namespace engine {
         };
         m_gui = std::make_unique<Gui>(m_window, winResizeFn);
 
-
         // Callback Initialization
         glfwSetKeyCallback(m_window, &key_callback);
+        glfwSetCursorPosCallback(m_window, &cursor_position_callback);
         glfwSetMouseButtonCallback(m_window, &mouse_button_callback);
+        glfwSetScrollCallback(m_window, &scroll_callback);
     }
 
     Window::~Window()
@@ -98,7 +99,7 @@ namespace engine {
 
 
     void
-    Window::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    Window::key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
     {
         // Get User pointer from Glfw to call Window method
         auto w = static_cast<Window*>(glfwGetWindowUserPointer(window));
@@ -112,6 +113,26 @@ namespace engine {
         // If the key was pressed, process the input
         if (event.KeyEvent.Pressed == SEvent::SKeyEvent::State::Press)
             w->onKeyEvent(event);
+
+        // Notify the EventManager
+        w->m_eventManager.notify(event);
+    }
+
+    void
+    Window::cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
+    {
+        // Get User pointer from Glfw to call Window method
+        auto w = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+        // Create and fill Event container
+        SEvent event;
+        event.EventType = SEvent::EEventType::EET_MOUSE_EVENT;
+        event.MouseEvent.type = SEvent::SMouseEvent::Type::Move;
+
+        // Get mouse position
+        double x, y;
+        glfwGetCursorPos(window, &x, &y);
+        event.MouseEvent.pos = glm::vec2{ float(x), float(y) };
 
         // Notify the EventManager
         w->m_eventManager.notify(event);
@@ -144,10 +165,27 @@ namespace engine {
             // Should not be something else
             break;
         }
+
+        // Get and Set mouse position
         double x, y;
         glfwGetCursorPos(window, &x, &y);
-        event.MouseEvent.pos = glm::vec2{float(x), float(y)};
+        event.MouseEvent.pos = glm::vec2{ float(x), float(y) };
 
+        // Notify the EventManager
+        w->m_eventManager.notify(event);
+    }
+
+    void
+    Window::scroll_callback(GLFWwindow * window, double xoffset, double yoffset)
+    {
+        // Get User pointer from Glfw to call Window method
+        auto w = static_cast<Window*>(glfwGetWindowUserPointer(window));
+
+        // Create and fill Event container
+        SEvent event;
+        event.EventType = SEvent::EEventType::EET_MOUSE_EVENT;
+        event.MouseEvent.type = SEvent::SMouseEvent::Type::Wheel;
+        event.MouseEvent.wheelOffset = glm::vec2{(float)xoffset, (float)yoffset};
 
         // Notify the EventManager
         w->m_eventManager.notify(event);

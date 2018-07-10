@@ -25,11 +25,57 @@ namespace engine {
         // Define a simple triangle
         // TODO: In the end should be
         // Position / Normals / Colors / UVs (Encapsulated in an object?)
-        const float vertices[] = {
+        /*const float vertices[] = {
             // Position             Color 
             -1.0f, -1.0f, 0.0f,     1.0f, 0.0f, 0.0f,   // left
             1.0f,  -1.0f, 0.0f,     1.0f, 1.0f, 0.0f,   // right
             0.0f,   1.0f, 0.0f,     1.0f, 0.0f, 1.0f    // top
+        };*/
+
+        // Define a square
+        float vertices[] = {
+            // Position             // Color
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,     1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+
+            -0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,     1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+
+            -0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+
+            0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+
+            -0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,     1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
         };
 
 
@@ -59,7 +105,7 @@ namespace engine {
         m_vao.bind();
 
         // Draw object
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // Unbind VAO
         m_vao.unbind();

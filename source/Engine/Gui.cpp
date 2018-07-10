@@ -17,13 +17,13 @@
 
 #include "Engine/Gui.h"
 
-#include <imgui/imgui.h>
+#include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw_gl3.h"
 
 namespace engine {
 
-    Gui::Gui(GLFWwindow * window, const Gui::WinResizeFn && winResizeFn) :
-        m_resizeWindow{true},
+    Gui::Gui(GLFWwindow * window, const Gui::WinResizeFn winResizeFn) :
+        m_resizeWindow(true),
         m_winResizeFn{ std::move(winResizeFn) }
     {
         ImGui_ImplGlfwGL3_Init(window, true);

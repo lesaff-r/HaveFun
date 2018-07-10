@@ -18,7 +18,7 @@ find_path( GLM_INCLUDE_DIR
 	NAMES
 		glm/glm.hpp
 	HINTS
-		"${GLM_LOCATION}"
+		"${GLM_LOCATION}/include"
 		"$ENV{GLM_LOCATION}"
 	PATHS
 		/usr/include
@@ -26,7 +26,6 @@ find_path( GLM_INCLUDE_DIR
 		/sw/include
 		/opt/local/include
 		"$ENV{PROGRAMFILES}/glm/include"
-		${GLM_LOCATION}/include
 	DOC
 		"The directory where glm/glm.hpp resides")
 
