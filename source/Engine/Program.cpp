@@ -17,23 +17,25 @@
 
 #include "Engine/Program.h"
 
-#include <iostream>
-
 namespace engine {
 
-	Program::Program(int argc, char * argv[]) :
-		m_window{}
-	{}
+    Program::Program(int argc, char * argv[]) :
+        m_window{ m_eventManager },
+        m_core{ m_eventManager }
+    {}
 
-	int
-	Program::run(void) {
-		while (!m_window.should_close())
-		{
-			m_window.update();
-			
-			m_window.render();
-		}
-		return EXIT_SUCCESS;
-	}
+    int
+    Program::run(void)
+    {
+        while (!m_window.should_close())
+        {
+            m_window.update();
+
+            m_core.update();
+            m_core.render();
+
+            m_window.render();
+        }
+        return EXIT_SUCCESS;
+    }
 }
-

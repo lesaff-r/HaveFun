@@ -18,27 +18,29 @@
 #pragma once
 
 #include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\Scene.h"
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class Core
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        Core(EventManager & eventManager);
+
 
     public:
-        int		run(void);
+        void update();
+        void render();
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        bool onEvent(const SEvent & event);
+
+    private:
+        EventManager & m_eventManager;
+
+    private:
+        Scene m_scene;
     };
 }
+

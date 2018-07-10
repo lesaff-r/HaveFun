@@ -17,28 +17,18 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include <glm/glm.hpp>
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class Material
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
-
-    public:
-        int		run(void);
+        Material();
+        Material(glm::vec4 & diffuse);
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        glm::vec4 m_diffuse;
     };
 }

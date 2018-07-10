@@ -17,46 +17,63 @@
 
 #pragma once
 
+#include "Engine\EventManager.h"
 #include "Engine\Gui.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <memory>
 
-struct	GLFWwindow;
+struct GLFWwindow;
 
 namespace engine {
 
-	// @brief Encapsulate a Window context
-	// For now support only GLFW
-	class Window final
-	{
-	public:
-		// @brief Throw std::runtime_error if GLFW or GLAD Initialization failed
-		Window();
-		~Window();
+    // @brief Encapsulate a Window context
+    // For now support only GLFW
+    class Window final
+    {
+    public:
+        // @brief Create a new GLFW window
+        // @note Throw std::runtime_error if GLFW or GLAD Initialization failed
+        Window(EventManager & eventManager);
+        ~Window();
 
-		// Delete copy operations
-		Window(const Window &) = delete;
-		Window & operator=(const Window &) = delete;
+        // Delete copy operations
+        Window(const Window &) = delete;
+        Window & operator=(const Window &) = delete;
 
-		// Define default moving operations
-		Window(Window &&) = default;
-		Window & operator=(Window &&) = default;
+        // Define default moving operations
+        Window(Window &&) = default;
+        Window & operator=(Window &&) = default;
+
+    public:
+        inline int should_close() const     { return glfwWindowShouldClose(m_window); }
+
+        void update();
+        void render();
 
 
-	public:
-		int should_close() const;
-		void resize(int width, int heigh) const;
+    private:
+        // Callbacks used to notify the EventManager that an event has occured
+        static void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods);
+        static void cursor_position_callback(GLFWwindow * window, double xpos, double ypos);
+        static void mouse_button_callback(GLFWwindow * window, int button, int action, int mods);
+        static void scroll_callback(GLFWwindow * window, double xoffset, double yoffset);
 
-		void update();
-		void render();
+        // Handle Keyboard Events
+        bool onKeyEvent(const SEvent & event);
 
-	private:
-		void processInputs();
+        // Close the window
+        void close() const;
 
-	private:
-		GLFWwindow * m_window;
+        // Resize the window
+        // TODO: Or changed resolution if full screen
+        void resize(int width, int heigh) const;
 
-		std::unique_ptr<Gui> m_gui;
-	};
+    private:
+        EventManager & m_eventManager;
+
+        GLFWwindow * m_window;
+        Gui::UniquePtr m_gui;
+    };
 }
-

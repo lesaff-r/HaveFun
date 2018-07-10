@@ -17,28 +17,36 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include <unordered_map>
+#include <functional>
+
+namespace engine {
+    struct SEvent;
+    enum class EEventType;
+}
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class EventManager final
     {
-    public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+    // @brief Callbacks to process Events
+    using EventCallbackFn = std::function<bool(const SEvent &)>;
 
     public:
-        int		run(void);
+        EventManager();
 
+
+    public:
+        void registerCallback(/*const EEventType & eventType,*/
+                              const EventCallbackFn callback);
+
+        // Notify the EventManager that an Event has occured
+        void notify(const SEvent & event);
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        // Callback for the Engine to manage Events
+        EventCallbackFn m_callback;
+
+        //std::unordered_map<EEventType, std::list<EventCallbackFn>> m_callbacks;
     };
 }

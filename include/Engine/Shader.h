@@ -17,28 +17,41 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include <glad\glad.h>
+#include <string>
+#include <memory>
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class Shader
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        Shader(const std::string & data, const GLenum & type);
+        ~Shader();
 
     public:
-        int		run(void);
+        inline unsigned int id()    { return m_id; }
+
+        static const std::string get(const std::string & path);
+
+    public:
+        using UniquePtr = std::unique_ptr<Shader>;
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        // @brief Create a new shader of the given type
+        unsigned int createShaderFromType(const GLenum & type);
+
+        // @brief Try to compile the shader
+        void compile();
+
+        void getLogInfos();
+
+    private:
+        GLenum	m_type;
+        GLuint	m_id;
+
+        bool	m_isCompiled = false;
     };
 }
+

@@ -17,28 +17,41 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\Camera.h"
+#include "Engine\Object.h"
+#include "Engine\ShaderProgram.h"
+
+#include <list>
+#include <memory>
+
+namespace engine {
+    struct SEvent;
+}
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    // TODO : Need sceneNodes and a SceneManager 
+    class Scene
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        Scene();
+
 
     public:
-        int		run(void);
+        void update();
+        void render();
+
+        bool onEvent(const SEvent & event);
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        // The active Camera used to view the scene
+        Camera m_camera;
+
+        // All the objects in the Scene
+        std::list<Object::UniquePtr>  m_objects;
+
+        // TODO: For now but will later be a material in the object
+        std::unique_ptr<ShaderProgram>      m_shaderProgram;
     };
 }

@@ -17,28 +17,23 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include <glad\glad.h>
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    // @brief Encapsulation of a Vertex Array Object for the OpenGL API
+    class ArrayObject final
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        ArrayObject();
+
 
     public:
-        int		run(void);
+        inline void bind() const    { glBindVertexArray(m_vao); }
+        inline void unbind() const  { glBindVertexArray(0); }
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        GLuint m_vao;
     };
 }

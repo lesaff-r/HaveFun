@@ -17,28 +17,32 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\ArrayObject.h"
+#include "Engine\BufferObject.h"
+#include "Engine\Material.h"
+
+#include <glad\glad.h>
+#include <memory>
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class Object
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        Object();
+
 
     public:
-        int		run(void);
+        void render();
+
+    public:
+        using UniquePtr = std::unique_ptr<Object>;
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        ArrayObject  m_vao;
+        BufferObject m_vboVertices;
+
+        Material m_material; // TODO: Unused for now
     };
 }

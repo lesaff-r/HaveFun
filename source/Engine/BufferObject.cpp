@@ -15,30 +15,31 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\BufferObject.h"
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    BufferObject::BufferObject(const GLenum type, const GLenum usage) :
+        m_vbo{ 0 },
+        m_type{ type },
+        m_usage{ usage }
     {
-    public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
-
-    public:
-        int		run(void);
+        glGenBuffers(1, &m_vbo);
+    }
 
 
-    private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
-    };
+    void
+    BufferObject::init(const GLsizeiptr size, const GLvoid * data) const {
+        glBufferData(m_type, size, data, m_usage);
+    }
+
+    void
+    BufferObject::attribute(const GLuint index, const GLint size,
+                            const GLsizei stride, const GLvoid * pointer) const
+    {
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(index, size,
+                              GL_FLOAT, GL_FALSE,
+                              stride, pointer);
+    }
 }

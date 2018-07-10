@@ -15,30 +15,26 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine/EventManager.h"
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    EventManager::EventManager()
+    {}
+
+
+    void
+    EventManager::registerCallback(/*const EEventType & eventType,*/
+                                   const EventCallbackFn callback)
     {
-    public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        // Will maybe be at some point
+        // m_callbacks[eventType].emplace_back(std::move(callback));
+        m_callback = std::move(callback);
+    }
 
-    public:
-        int		run(void);
-
-
-    private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
-    };
+    void
+    EventManager::notify(const SEvent & event)
+    {   
+        m_callback(event);
+    }
 }

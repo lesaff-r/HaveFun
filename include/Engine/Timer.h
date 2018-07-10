@@ -17,28 +17,32 @@
 
 #pragma once
 
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include <chrono>
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
+    class Timer
     {
     public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+        using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
-    public:
-        int		run(void);
+        static TimePoint getCurrentTimePoint()
+        {
+            return std::chrono::high_resolution_clock::now();
+        }
+
+        void update()
+        {
+            auto now = getCurrentTimePoint();
+            mElapsedTime = now - mCurrentTime;
+            mCurrentTime = now;
+        }
+
+        inline float getElapsedTime() { return static_cast<float>(mElapsedTime.count()); }
 
 
     private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
+        TimePoint mCurrentTime;
+        std::chrono::duration<double> mElapsedTime;
     };
 }

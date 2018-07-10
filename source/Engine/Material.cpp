@@ -15,30 +15,15 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\EventManager.h"
-#include "Engine/Window.h"
-#include "Engine/Core.h"
+#include "Engine\Material.h"
 
 namespace engine {
 
-    // @note Can throw std::runtime_error on construction
-    // @see Program(int ac, char * av[]);
-    class Program final
-    {
-    public:
-        // @brief Throw std::runtime_error if Window creation failed
-        // @see Window::Window();
-        Program(int ac, char * av[]);
+    Material::Material() :
+        m_diffuse{ glm::vec4{255, 255, 255, 255} }
+    {}
 
-    public:
-        int		run(void);
-
-
-    private:
-        EventManager m_eventManager;
-        Window       m_window;
-        Core         m_core;
-    };
+    Material::Material(glm::vec4 & diffuse) :
+        m_diffuse(diffuse)
+    {}
 }
