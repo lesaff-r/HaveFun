@@ -27,7 +27,8 @@ namespace engine {
     EventManager::registerCallback(/*const EEventType & eventType,*/
                                    const EventCallbackFn callback)
     {
-        //m_callbacks[eventType].emplace_back(std::move(callback));
+        // Will maybe be at some point
+        // m_callbacks[eventType].emplace_back(std::move(callback));
         m_callback = std::move(callback);
     }
 
