@@ -44,7 +44,7 @@ namespace engine {
         m_camera.attachController(std::make_unique<CameraController>());
 
         // New Test Object
-        m_objects.emplace_back(std::make_unique<Object>());
+        m_objects.emplace_back(std::make_shared<Object>());
     }
 
 
@@ -74,15 +74,18 @@ namespace engine {
         // Bind Shader Program
         m_shaderProgram->bind();
 
-        // TODO: for now
+        // TODO: for now but should be in Model
         glm::mat4 model{ 1 };
 
         glm::mat4 mvp = projection * view * model;
         m_shaderProgram->setUniform("mvp", mvp);
 
+        // TODO: Here for now
+        m_shaderProgram->setUniform("light_color", m_light.intensity);
+
         for (auto & object : m_objects)
         {
-            object->render();
+            m_renderer.render(object);
         }
 
         // Unbind Shader Program

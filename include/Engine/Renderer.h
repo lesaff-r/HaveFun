@@ -17,32 +17,13 @@
 
 #pragma once
 
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
-#include <glad\glad.h>
-#include <memory>
+#include "Engine\Object.h"
 
 namespace engine {
 
-    class Object
+    class Renderer
     {
     public:
-        Object();
-
-
-    public:
-        void render();
-
-    public:
-        using SharedPtr = std::shared_ptr<Object>;
-
-
-    private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material; // TODO: Unused for now
+        void render(Object::SharedPtr object);
     };
 }
