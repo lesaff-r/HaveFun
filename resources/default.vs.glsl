@@ -8,6 +8,10 @@ uniform vec3 light_color;
 uniform mat4 mvp;
 
 out vec3 f_color;
+out gl_PerVertex
+{
+	vec4 gl_Position;
+};
 
 void main()
 {

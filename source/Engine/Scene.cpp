@@ -20,8 +20,6 @@
 #include "Engine\ShaderProgram.h"
 #include "Engine\Event.h"
 
-#include <glm\gtx\transform.hpp>
-
 namespace engine {
 
     Scene::Scene()
@@ -39,6 +37,9 @@ namespace engine {
         // TODO: m_shaderProgram->attachShader()?
 
         // TODO: Objects & Scene loader ...
+
+        // TODO: Please put that somewhere else
+        glEnable(GL_DEPTH_TEST);
 
         // Attach controller to camera
         m_camera.attachController(std::make_unique<CameraController>());
@@ -61,11 +62,10 @@ namespace engine {
 
 
         // Clear Buffers
-        glClearColor(0.2f, 0.2f, .2f, 0);
-
-        glEnable(GL_DEPTH_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        static const float depth = 1.0;
+        static glm::vec4 color{ 0.2f, 0.2f, .2f, 0 };
+        glClearNamedFramebufferfv(0, GL_COLOR, 0, &color[0]);
+        glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
 
         const glm::mat4 & view = m_camera.getViewMatrix();
         const glm::mat4 & projection = m_camera.getProjectionMatrix();

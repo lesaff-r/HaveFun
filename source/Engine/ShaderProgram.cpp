@@ -87,6 +87,9 @@ namespace engine {
     void
     ShaderProgram::link()
     {
+        // Needed to create a program pipeline
+        glProgramParameteri(m_id, GL_PROGRAM_SEPARABLE, GL_TRUE);
+
         // Link shaders
         glLinkProgram(m_id);
 
@@ -98,7 +101,6 @@ namespace engine {
         m_isLinked = (linkStatus == GL_TRUE);
         if (!m_isLinked)
             getLogInfos();
-
     }
 
     void
