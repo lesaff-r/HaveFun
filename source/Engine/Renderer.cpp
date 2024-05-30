@@ -15,34 +15,12 @@
 // Copyright (C) 2017 Lesaffre Remi (remi.lesaffre@gmail.com)
 //
 
-#pragma once
-
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
-#include <glad\glad.h>
-#include <memory>
+#include "Engine\Renderer.h"
 
 namespace engine {
 
-    class Object
+    void Renderer::render(Object::SharedPtr object)
     {
-    public:
-        Object();
-
-
-    public:
-        void render();
-
-    public:
-        using SharedPtr = std::shared_ptr<Object>;
-
-
-    private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material; // TODO: Unused for now
-    };
+        object->render();
+    }
 }

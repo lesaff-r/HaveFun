@@ -19,6 +19,8 @@
 
 #include "Engine\Camera.h"
 #include "Engine\Object.h"
+#include "Engine\Renderer.h"
+#include "Engine\Light.h"
 #include "Engine\ShaderProgram.h"
 
 #include <list>
@@ -49,7 +51,13 @@ namespace engine {
         Camera m_camera;
 
         // All the objects in the Scene
-        std::list<Object::UniquePtr>  m_objects;
+        std::list<Object::SharedPtr>  m_objects;
+
+        // Scene renderer
+        Renderer m_renderer;
+
+        // Basic Light
+        Light m_light;
 
         // TODO: For now but will later be a material in the object
         std::unique_ptr<ShaderProgram>      m_shaderProgram;

@@ -20,8 +20,6 @@
 #include "Engine\ShaderProgram.h"
 #include "Engine\Event.h"
 
-#include <glm\gtx\transform.hpp>
-
 namespace engine {
 
     Scene::Scene()
@@ -40,11 +38,14 @@ namespace engine {
 
         // TODO: Objects & Scene loader ...
 
+        // TODO: Please put that somewhere else
+        glEnable(GL_DEPTH_TEST);
+
         // Attach controller to camera
         m_camera.attachController(std::make_unique<CameraController>());
 
         // New Test Object
-        m_objects.emplace_back(std::make_unique<Object>());
+        m_objects.emplace_back(std::make_shared<Object>());
     }
 
 
@@ -61,11 +62,20 @@ namespace engine {
 
 
         // Clear Buffers
-        glClearColor(0.2f, 0.2f, .2f, 0);
+        static const float depth = 1.0;
+        static glm::vec4 color{ 0.2f, 0.2f, .2f, 0 };
+        glClearBufferfv(GL_COLOR, 0, &color[0]);
+        glClearBufferfv(GL_DEPTH, 0, &depth);
 
-        glEnable(GL_DEPTH_TEST);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        /* NEW WAY BUT NOT WORKING ??
+        glClearNamedFramebufferfv(0, GL_COLOR, 0, &color[0]);
+        glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);*/
+       /* OLD WAY
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearDepth(1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
 
+        
 
         const glm::mat4 & view = m_camera.getViewMatrix();
         const glm::mat4 & projection = m_camera.getProjectionMatrix();
@@ -74,15 +84,18 @@ namespace engine {
         // Bind Shader Program
         m_shaderProgram->bind();
 
-        // TODO: for now
+        // TODO: for now but should be in Model
         glm::mat4 model{ 1 };
 
         glm::mat4 mvp = projection * view * model;
         m_shaderProgram->setUniform("mvp", mvp);
 
+        // TODO: Here for now
+        m_shaderProgram->setUniform("light_color", m_light.intensity);
+
         for (auto & object : m_objects)
         {
-            object->render();
+            m_renderer.render(object);
         }
 
         // Unbind Shader Program

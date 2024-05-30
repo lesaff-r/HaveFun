@@ -37,7 +37,11 @@ namespace engine {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         // Create GLFW Window
-        m_window = glfwCreateWindow(1080, 720, "Engine_v0", NULL, NULL);
+        GLFWmonitor * monitor = glfwGetPrimaryMonitor();
+
+        const GLFWvidmode * mode = glfwGetVideoMode(monitor);
+
+        m_window = glfwCreateWindow(mode->width, mode->height, "Engine_v0", monitor, NULL);
         if (!m_window) {
             glfwTerminate();
             throw std::runtime_error{ "[ERROR] GLFW Window creation failed" };

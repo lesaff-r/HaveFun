@@ -61,6 +61,15 @@ namespace engine {
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
     }
 
+    void
+    ShaderProgram::setUniform(const std::string & name, const glm::vec3 & vec) const
+    {
+        int location = glGetUniformLocation(this->m_id, name.c_str());
+
+        // Location should always be found
+        assert(location != -1);
+        glUniform3fv(location, 1, glm::value_ptr(vec));
+    }
 
     Shader::UniquePtr
     ShaderProgram::createShader(const std::string & shaderData,
@@ -78,6 +87,9 @@ namespace engine {
     void
     ShaderProgram::link()
     {
+        // Needed to create a program pipeline
+        glProgramParameteri(m_id, GL_PROGRAM_SEPARABLE, GL_TRUE);
+
         // Link shaders
         glLinkProgram(m_id);
 
@@ -89,7 +101,6 @@ namespace engine {
         m_isLinked = (linkStatus == GL_TRUE);
         if (!m_isLinked)
             getLogInfos();
-
     }
 
     void

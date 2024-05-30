@@ -17,32 +17,15 @@
 
 #pragma once
 
-#include "Engine\ArrayObject.h"
-#include "Engine\BufferObject.h"
-#include "Engine\Material.h"
-
-#include <glad\glad.h>
-#include <memory>
+#include <glm/glm.hpp>
 
 namespace engine {
 
-    class Object
+    struct Light
     {
-    public:
-        Object();
-
-
-    public:
-        void render();
-
-    public:
-        using SharedPtr = std::shared_ptr<Object>;
-
-
-    private:
-        ArrayObject  m_vao;
-        BufferObject m_vboVertices;
-
-        Material m_material; // TODO: Unused for now
+        public:
+            glm::vec3 position{ 10.0f, 10.0f, 10.0f };
+            glm::vec3 intensity{ 1.0f, 1.0f, 0.4f };
     };
+
 }
