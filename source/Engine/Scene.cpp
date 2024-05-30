@@ -64,8 +64,18 @@ namespace engine {
         // Clear Buffers
         static const float depth = 1.0;
         static glm::vec4 color{ 0.2f, 0.2f, .2f, 0 };
+        glClearBufferfv(GL_COLOR, 0, &color[0]);
+        glClearBufferfv(GL_DEPTH, 0, &depth);
+
+        /* NEW WAY BUT NOT WORKING ??
         glClearNamedFramebufferfv(0, GL_COLOR, 0, &color[0]);
-        glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);
+        glClearNamedFramebufferfv(0, GL_DEPTH, 0, &depth);*/
+       /* OLD WAY
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearDepth(1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
+
+        
 
         const glm::mat4 & view = m_camera.getViewMatrix();
         const glm::mat4 & projection = m_camera.getProjectionMatrix();
